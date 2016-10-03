@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Reset";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section left_menu{
+    <div class="panel-group left_menu col-md-3 hidden-xs hidden-sm" id='left_menu'>
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class='icon-line-menu'></i> Menu
+            </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse in">
+            <div class="panel-body">
+                @{Html.RenderAction("Category", "Home");}
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.left_menu').addClass('left_menu_sticker');
+        });
+    </script>
+    <script>
+        $(window).load(function () {
+            $('.left_menu').addClass('left_menu_sticker');
+        });
+    </script>
+}
+
+@section title{
+   <section id="page-title">
+    <div class="container clearfix">
+
+        <h1 class="col-md-6 col-sm-6">Tài khoản</h1><br>
+        <div class="clear"></div>
+
+        <span class="col-sm-6 text-center">Phục hồi mật khẩu</span>
+
+        <ol class="breadcrumb col-md-6 col-sm-6 hidden-xs">
+            <li><a href="/">Trang chủ</a></li>
+
+            <li><a href="/tai-khoan.html">Tài khoản</a></li>
+
+            <li class="active">Phục hồi mật khẩu</li>
+        </ol>
+    </div>
+</section>
+}
+<div class="content-wrap">
+
+    <div class="container clearfix">
+
+        <div class="accordion accordion-lg divcenter nobottommargin clearfix" style="max-width: 550px;">
+            <div class="acctitle acctitlec"><i class="icon-undo"></i>Phục hồi mật khẩu</div>
+            <div>
+                <form accept-charset="UTF-8"  method="post">
+                    <input name="form_type" type="hidden" value="reset_customer_password">
+                  
+                    <div class="col_full">
+                        <label for="customer_password">Mật khẩu:</label>
+                        <input type="password" id="customer_password" name="customer[password]" value="" class="form-control">
+                    </div>
+
+                    <div class="col_full">
+                        <label for="password_confirm">Xác nhận mật khẩu:</label>
+                        <input type="password" id="password_confirm" name="customer[password_confirmation]" value="" class="form-control">
+                    </div>
+
+                    <div class="col_full nobottommargin">
+                        <button class="button button-3d button-black nomargin" id="login-form-submit" name="login-form-submit" value="login">Lưu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+

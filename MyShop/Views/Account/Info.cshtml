@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section left_menu{
+    <div class="panel-group left_menu col-md-3 hidden-xs hidden-sm" id='left_menu'>
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class='icon-line-menu'></i> Menu
+            </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse in">
+            <div class="panel-body">
+                @{Html.RenderAction("Category", "Home");}
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.left_menu').addClass('left_menu_sticker');
+        });
+    </script>
+    <script>
+        $(window).load(function () {
+            $('.left_menu').addClass('left_menu_sticker');
+        });
+    </script>
+}
+
+@section title{
+    <section id="page-title">
+    <div class="container clearfix">
+
+        <h1 class="col-md-6 col-sm-6">Tài khoản</h1><br>
+        <div class="clear"></div>
+        <ol class="breadcrumb col-md-6 col-sm-6 hidden-xs">
+            <li><a href="/">Trang chủ</a></li>
+
+            <li><a href="/tai-khoan.html">Tài khoản</a></li>
+        </ol>
+    </div>
+</section>
+}
+
+<div class="content-wrap">
+    <div class="container clearfix">
+        <div class="fancy-title title-bottom-border">
+            <h3>Đơn hàng đã đặt</h3>
+        </div>
+        <div class="table-responsive account-table">
+
+            <p>Bạn chưa đặt mua sản phẩm</p>
+
+        </div>
+        <div class="fancy-title title-bottom-border">
+            <h3>Thông tin tài khoản</h3>
+        </div>
+        <div class="account-detail">
+
+            <h4>Lê Khanh</h4>
+            <p>khanhle0301.it@gmail.com</p>
+
+            <p></p>
+
+            <p></p>
+
+            <p> </p>
+            <p></p>
+
+            <p><a id="view_address" href="#">Xem địa chỉ</a></p>
+        </div>
+    </div>
+</div>

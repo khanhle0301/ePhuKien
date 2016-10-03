@@ -1,0 +1,34 @@
+﻿@{
+    var session = (MyShop.Common.AccountLogin)Session[Common.CommonConstants.AccountSession];
+}
+<div id="top-bar" class="">
+    <div class="container clearfix">
+        <div class="col_half nobottommargin hidden-xs top_contact">
+            <p class="nobottommargin">
+                <strong><i class='icon-phone3'></i></strong> <a href='0909%20111%20111.html'> 0909 111 111</a> |
+                <strong><i class='icon-email3'></i></strong> <a href='hi%40haravan.html'> hi@haravan.com</a>
+            </p>
+        </div>
+        <div class="col_half col_last fright nobottommargin top_link_wrapper">
+            <!-- Top Links
+            ============================================= -->
+            <div class="top-links">
+                <ul>
+                    <li><a href="/trang/gioi-thieu.html">Giới thiệu</a></li>
+                    <li><a href="/san-pham/khuyen-mai.html">Khuyến mãi</a></li>
+                    <li><a href="/bai-viet/">Bài viết</a></li>
+                    <li><a href="/trang/lien-he.html">Liên hệ</a></li>
+                    <li><a href="/tai-khoan.html">Tài khoản</a></li>
+                    @if (session == null)
+                    {
+                        <li><a href="/dang-nhap.html">Đăng nhập / Đăng ký</a></li>
+                    }
+                    else
+                    {
+                        <li class=""><a href="/Account/Logout">Thoát</a></li>                       
+                    }
+                </ul>
+            </div><!-- .top-links end -->
+        </div>
+    </div>
+</div>

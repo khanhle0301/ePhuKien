@@ -1,0 +1,454 @@
+﻿@model MyShop.Models.ProductViewModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section footerJS{
+    <script src="~/Assets/client/js/addCart.js"></script>
+}
+
+@section left_menu{
+    <div class="panel-group left_menu col-md-3 hidden-xs hidden-sm" id='left_menu'>
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <i class='icon-line-menu'></i> Menu
+            </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse in">
+            <div class="panel-body">
+                @{Html.RenderAction("Category", "Home");}
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('.left_menu').addClass('left_menu_sticker');
+        });
+    </script>
+
+    <script>
+        $(window).load(function () {
+            $('.left_menu').addClass('left_menu_sticker');
+        });
+    </script>
+}
+
+@section title{
+   <section id="page-title">
+    <div class="container clearfix">
+        <h1 class="col-md-6 col-sm-6">@(Model.Name)</h1>
+        <ol class="breadcrumb col-md-6 col-sm-6 hidden-xs">
+            <li><a href="/">Trang chủ</a></li>
+            <li><a href="/san-pham/@(Model.ProductCategory.Alias)/">@Model.ProductCategory.Name</a></li>
+            <li class="active">@Model.Name</li>
+        </ol>
+    </div>
+</section>
+}
+
+<div class="content-wrap">
+    <div class="container clearfix">
+        <div class="postcontent nobotto<mmargin clearfix col_last">
+            <div class='product-page'>
+
+                <div class="single-product">
+                    <form method="post" id="ProductDetailsForm" action="https://ephukien.myharavan.com/???" crossorigin="anonymous">
+                        <div class="product">
+                            <div class="col_half">
+                                <!-- Product Single - Gallery
+                                ============================================= -->
+                                <div class="product-image product-main-image">
+                                    <div class="fslider" data-animation="fade" data-thumbs="true" data-arrows="false">
+                                        <div class="flexslider">
+                                            <!--load nhiều hình ảnh-->
+                                            <div class="slider-wrap" data-lightbox="gallery">
+                                                @*@{
+                                                    var moreImages = (List<string>)ViewBag.MoreImages;
+                                                    if (moreImages.Count > 0)
+                                                    {
+                                                        foreach (var image in moreImages)
+                                                        {
+                                                            <div class="slide" data-thumb="@image">
+                                                                <a href="@image" title="@Model.Name" data-lightbox="gallery-item">
+                                                                    <img src="@image" alt="@Model.Name">
+                                                                </a>
+                                                            </div>
+                                                        }
+                                                    }
+                                                }*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="sale-flash">Sale!</div>
+
+                                </div><!-- Product Single - Gallery End -->
+                            </div>
+                            <div class="col_half col_last product-desc">
+                                <!-- Product Single - Price
+                                ============================================= -->
+                                <div class="product-price">
+                                    <ins style='margin-right: 5px;'>
+                                        @Model.Price.ToString("N0")₫
+                                    </ins>
+
+                                </div><!-- Product Single - Price End -->
+                                <div class="clear"></div>
+                                <div class="line"></div>
+                                <!-- Product Single - Quantity & Cart Button
+                                ============================================= -->
+                                <input type="hidden" class='unit_price_not_formated' value="45900000" />
+                                <input type="hidden" class="product_url" value="/products/tai-nghe-bluetooth-mondo" />
+                                <input type="hidden" class="product_title_hd" value="Tai nghe Bluetooth Mondo" />
+                                <input type="hidden" class="product_img_small" value="/Assets/client/hstatic.net/589/1000057589/1/2015/12-9/mondo-2_master.jpg" />
+
+                                <div class="hidden" style="">
+                                    <select id="product-select" name="id">
+
+                                        <option value="1004711507" class="">Đen - 459,000₫</option>
+
+                                        <option value="1004714890" class="">Xanh - 459,000₫</option>
+
+                                        <option value="1004714928" class="">Trắng - 459,000₫</option>
+
+                                    </select>
+                                </div>
+                                <script>
+                                    var selectCallback = function (variant, selector) {
+                                        var $tagPrice = '#ProductDetailsForm div.product-price ins';
+                                        var $tagPriceCompare = '#ProductDetailsForm div.product-price del';
+                                        var $tagProductSection = '#ProductDetailsForm';
+                                        update_variant(variant, $tagPrice, $tagPriceCompare, '#addtocart', $tagProductSection);
+                                        if (variant != null && variant.featured_image != null) {
+                                            $(".flex-control-nav li img[src='" + Haravan.resizeImage(variant.featured_image.src, 'master') + "']").click();
+                                        };
+                                    };
+                                    jQuery(document).ready(function ($) {
+
+                                        new Haravan.OptionSelectors("product-select", { product: { "available": true, "compare_at_price_max": 55000000.0, "compare_at_price_min": 55000000.0, "compare_at_price_varies": false, "compare_at_price": 55000000.0, "content": null, "description": "<div><div><strong>Đặc điểm nổi bật: &nbsp;</strong></div><div><br></div><div>Công nghệ âm thanh vòm 3D DSP tạo chất lượng âm thanh trung thực.</div><div><br></div><div>Thiết kế hình trụ tiện lợi, bỏ bên ngoài chống bào mòn.</div><div><br></div><div>Hỗ trợ micro-SD / TF.</div><div><br></div><div>Loa di động không dây được kết nối qua bluetooth của các thiết bị khác.</div><div><br></div><div>Có thể chơi nhạc, trả lời cuộc gọi điện thoại sau khi được kết nối bluetooth.</div><div><br></div><div><strong>Mô tả sản phẩm:</strong></div><div><br></div><div>Rustic, đúng như tên gọi của nó, là một chiếc loa không dây mộc mạc, đơn giản nhưng mang lại âm thanh rất “sâu”, tinh tế theo chuẩn HiFi.</div><div><br></div><div>Rustic luôn bên cạnh bạn và sẵn sàng “play” ở bất cứ nơi đâu. Với bề ngoài được thiết kế trẻ trung năng động dựa trên hình trụ nhỏ, làm Rustic trở nên tiện lợi và dễ dàng mang đi. Đừng vì bề ngoài khá đơn giản và nhỏ gọn của Rustic mà bạn có thể bỏ qua sản phẩm này. Với công nghệ 3D DSP được tích hợp bên trong, bạn sẽ được thưởng thức âm nhạc giống như đang trong phòng kín với tiếng ồn được loại bỏ một cách tối đa nhất. Rustic có thể chơi nhạc chất lượng cao như vậy liên tục trong 6 giờ liền cùng đèn LED hiển thị rõ ràng trạng thái pin còn dự trữ. Điều đặc biệt là Rustic tích hợp microphone-SD / TF và nút trả lời điện thoại cho chế độ đàm thoại rảnh tay khi có kết nối bluetooth với thiết bị điện thoại của bạn. Rustic đích thực là một thiết bị hỗ trợ tuyệt vời cho thoại rảnh tay. Vỏ bọc bên ngoài bằng hợp kim nhôm cao cấp, chống mài mọn và rất nhẹ, bền tạo cho Rustic trở nên mạnh mẽ và nổi bật trong bất cứ nơi nào mà nó xuất hiện. Hãy lựa chọn Rustic ngay hôm nay để trải nghiệm cảm giác tuyệt vời mà chiếc loa di động chất lượng này đem lại và hỗ trợ trọn vẹn nhất cho mọi cuộc vui của bạn.</div></div><div><br><span style=\"text-decoration: underline;\" data-mce-style=\"text-decoration: underline;\"><strong>Thông số kỹ thuật:</strong></span><br><br></div><table border=\"0\" cellpadding=\"1\" cellspacing=\"1\" height=\"auto\" width=\"100%\" class=\"mce-item-table\"><tbody><tr><td>Thương Hiệu</td><td>EGANY</td></tr><tr><td>Danh Mục</td><td>Loa di động</td></tr><tr><td>Chất liệu</td><td>Nhựa trong&nbsp;</td></tr><tr><td>Kích thước</td><td>100 X 100 X 100</td></tr><tr><td>Thời gian giao hàng&nbsp;</td><td>1 - 2 ngày làm việc</td></tr><tr><td>Chính Sách Bảo Hành</td><td>Bảo hành chính hãng</td></tr><tr><td>Showroom</td><td>61/2 Quang Trung, P.10 ,&nbsp;Q. Gò Vấp, TP. HCM</td></tr><tr><td>Hotline</td><td>0909 000 000</td></tr><tr><td>Bluetooth® Version</td><td>v4.0</td></tr><tr><td>Input power</td><td>5V, 1A</td></tr><tr><td>Output power</td><td>2W x 2</td></tr><tr><td>Impedance</td><td>3 Ohms</td></tr><tr><td>Speaker frequency</td><td>200Hz - 18KHz</td></tr><tr><td>Signal-to-noise ratio</td><td>65dB</td></tr><tr><td>Charging time</td><td>3.5-4 hours</td></tr><tr><td>Playing time</td><td>3 hours</td></tr><tr><td>Battery Capacity</td><td>Li-ion 900 mAh, 3.7V</td></tr><tr><td>Operating distance</td><td>10 meters</td></tr><tr><td>Packing Contents</td><td>Orbit, Micro-USB charging cable, 3.5 mm Audio Cable, User Guide, Warranty Card</td></tr><tr><td>Compatibility</td><td>Bluetooth™ enabled devices</td></tr></tbody></table><div><br></div>", "featured_image": "http://hstatic.net/589/1000057589/1/2015/12-9/mondo-2.jpg", "handle": "tai-nghe-bluetooth-mondo", "id": 1001317033, "images": ["http://hstatic.net/589/1000057589/1/2015/12-9/mondo-2.jpg", "/Assets/client/hstatic.net/589/1000057589/1/2015/12-9/mondo-5.jpg", "/Assets/client/hstatic.net/589/1000057589/1/2015/12-9/mondo-3.jpg", "/Assets/client/hstatic.net/589/1000057589/1/2015/12-9/mondo-7.jpg", "/Assets/client/hstatic.net/589/1000057589/1/2015/12-9/mondo-4.jpg", "/Assets/client/hstatic.net/589/1000057589/1/2015/12-9/mondo-6.jpg", "http://hstatic.net/589/1000057589/1/2015/12-9/mondo-8.jpg"], "options": ["Màu sắc"], "price": 45900000.0, "price_max": 45900000.0, "price_min": 45900000.0, "price_varies": false, "tags": ["mausac_Hạt dẻ", "mausac_Cam", "loaisanpham_Loa / Tai nghe", "loaisanpham_Tai nghe Bluetooth", "onsale", "nhasanxuat_Promate"], "template_suffix": null, "title": "Tai nghe Bluetooth Mondo", "type": "Tai nghe Bluetooth", "url": "/products/tai-nghe-bluetooth-mondo", "pagetitle": "Tai nghe Bluetooth Mondo", "metadescription": "Đặc điểm nổi bật:\n\nVỏ bằng nhôm cao cấp, trọng lượng nhẹ.\nĐộ bền cao và tiện lợi.\nTrả lời cuộc gọi điện thoại không dây từ bất kỳ điện thoại thông minh khi có B", "variants": [{ "id": 1004711507, "barcode": null, "available": true, "price": 45900000.0, "sku": null, "option1": "Đen", "option2": "", "option3": "", "options": ["Đen"], "inventory_quantity": 1, "old_inventory_quantity": 1, "title": "Đen", "weight": 0.0, "compare_at_price": 55000000.0, "inventory_management": null, "inventory_policy": "deny", "selected": false, "url": null, "featured_image": null }, { "id": 1004714890, "barcode": null, "available": true, "price": 45900000.0, "sku": null, "option1": "Xanh", "option2": "", "option3": "", "options": ["Xanh"], "inventory_quantity": 1, "old_inventory_quantity": 1, "title": "Xanh", "weight": 0.0, "compare_at_price": 55000000.0, "inventory_management": null, "inventory_policy": "deny", "selected": false, "url": null, "featured_image": null }, { "id": 1004714928, "barcode": null, "available": true, "price": 45900000.0, "sku": null, "option1": "Trắng", "option2": "", "option3": "", "options": ["Trắng"], "inventory_quantity": 1, "old_inventory_quantity": 1, "title": "Trắng", "weight": 0.0, "compare_at_price": 55000000.0, "inventory_management": null, "inventory_policy": "deny", "selected": false, "url": null, "featured_image": null }], "vendor": "Promate", "published_at": "2015-12-06T14:51:48Z", "created_at": "2015-12-09T15:51:06Z" }, onVariantSelected: selectCallback });
+
+                                    });
+                                </script>
+
+                                <!-- variants -->
+                                <div class="product-page-options ">
+
+
+                                    <div class="sizePicker" id='option-0'>
+                                        <label class="control-label options-title">Màu sắc:</label>
+                                        <div class='options-selection'>
+                                            <select id="product-color" class="form-control input-sm">
+                                                @foreach (var color in (IEnumerable<MyShop.Models.ColorViewModel>)ViewBag.Colors)
+                                                {
+                                                    <option data_size_code="@color.ID" data_color_code="@color.ID" class="" value="@color.Name">
+                                                        @color.Name
+                                                    </option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!-- end variant -->
+                                <!-- <form class="cart nobottommargin clearfix" method="post" enctype='multipart/form-data'>-->
+                                <div class="quantity product-quantity clearfix col-xs-6 noleftpadding">
+                                    <input type="button" value="-" class="minus">
+                                    <input type="text" id='product_quantity' readonly step="1" min="1" name="quantity" value="1" title="Qty" class="qty" size="4" />
+                                    <input type="button" value="+" class="plus">
+                                </div>
+                                <script>
+                                    var quantity = parseInt($('#ProductDetailsForm .product-quantity input.qty').val());
+
+                                    $('#ProductDetailsForm .minus').click(function () {
+                                        if (quantity > 0) {
+                                            if (quantity == 1) {
+                                                $('#addcart').attr('disabled', 'disabled');
+                                            }
+                                            quantity -= 1;
+                                        }
+                                        else {
+                                            quantity = 0;
+                                        }
+                                        $('#ProductDetailsForm .product-quantity input.qty').val(quantity);
+                                    });
+                                    $('#ProductDetailsForm  .plus').click(function () {
+                                        $('#addcart').removeAttr('disabled');
+                                        if (quantity < 100) {
+                                            quantity += 1;
+                                        }
+                                        else {
+                                            quantity = 100;
+                                        }
+                                        $('#ProductDetailsForm .product-quantity input.qty').val(quantity)
+                                    });
+
+                                </script>
+
+                                @if (Model.Quantity.HasValue && Model.Quantity > 0)
+                                {
+                                    <button type="submit" id="addcart" data-id="@Model.ID" class="add-to-cart col-xs-6 button nomargin btnAddToCart">Thêm vào giỏ</button>
+                                    <button type="submit" class="button col-xs-12 nopadding">Mua ngay</button>
+                                    <input type="hidden" id="hidProductID" value="@Model.ID" />
+                                }
+                                else
+                                {
+                                    <button type="button" class="add-to-cart button nomargin">Hết hàng</button>
+                                }
+
+                                <!--</form>--><!-- Product Single - Quantity & Cart Button End -->
+                                <div class="clear"></div>
+                                <div class="line"></div>
+
+                                <!-- Product Single - Short Description
+                                ============================================= -->
+                                <p>@Model.Description</p>
+                                <!-- Product Single - Short Description End -->
+                                <!-- Product Single - Meta
+                                ============================================= -->
+
+                                <div class="panel panel-default product-meta">
+                                    <div class="panel-body">
+                                        <!--<span itemprop="productID" class="sku_wrapper">SKU: <span class="sku">8465415</span></span>
+                                        <span class="posted_in">Category: <a href="#" rel="tag">Dress</a>.</span>-->
+                                        <span class="tagged_as">
+                                            Tags:
+                                            @foreach (var tag in (IEnumerable<MyShop.Models.TagViewModel>)ViewBag.Tags)
+                                            {
+                                                <a href="/san-pham/tag/@tag.ID/" rel="tag">@(tag.Name), </a>
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Product Single - Meta End -->
+                                <!-- Product Single - Share
+                                ============================================= -->
+                                <div class="si-share noborder clearfix">
+                                    <span>Chia sẻ:</span>
+                                    <div class='socical-wrapper'>
+                                        <ul class="social-icons">
+                                            <!-- script like share fb -->
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Product Single - Share End -->
+                            </div>
+                            <div class="col_full nobottommargin">
+
+                                <div class="tabs clearfix nobottommargin hidden-xs" id="tab-1">
+
+                                    <ul class="tab-nav clearfix">
+                                        <li><a href="#tabs-1"><i class="icon-align-justify2"></i><span class="hidden-xs"> Mô tả</span></a></li>
+                                        <li class=''><a href="#tabs-2"><i class="icon-info-sign"></i><span class="hidden-xs"> Bình luận</span></a></li>
+                                    </ul>
+                                    <div class="tab-container">
+                                        <div class="tab-content clearfix" id="tabs-1">
+                                            @Html.Raw(Model.Content)
+                                        </div>
+                                        <div class="tab-content clearfix" id="tabs-2">
+                                            <!-- script comment fb -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-group hidden-lg hidden-sm hidden-md" id="accordion">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" style='width: 100%; display: block;'>
+                                                    <i class="icon-align-justify2"></i><span class=""> Mô tả</span>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <div><div><strong>Đặc điểm nổi bật: &nbsp;</strong></div><div><br></div><div>Công nghệ âm thanh vòm 3D DSP tạo chất lượng âm thanh trung thực.</div><div><br></div><div>Thiết kế hình trụ tiện lợi, bỏ bên ngoài chống bào mòn.</div><div><br></div><div>Hỗ trợ micro-SD / TF.</div><div><br></div><div>Loa di động không dây được kết nối qua bluetooth của các thiết bị khác.</div><div><br></div><div>Có thể chơi nhạc, trả lời cuộc gọi điện thoại sau khi được kết nối bluetooth.</div><div><br></div><div><strong>Mô tả sản phẩm:</strong></div><div><br></div><div>Rustic, đúng như tên gọi của nó, là một chiếc loa không dây mộc mạc, đơn giản nhưng mang lại âm thanh rất “sâu”, tinh tế theo chuẩn HiFi.</div><div><br></div><div>Rustic luôn bên cạnh bạn và sẵn sàng “play” ở bất cứ nơi đâu. Với bề ngoài được thiết kế trẻ trung năng động dựa trên hình trụ nhỏ, làm Rustic trở nên tiện lợi và dễ dàng mang đi. Đừng vì bề ngoài khá đơn giản và nhỏ gọn của Rustic mà bạn có thể bỏ qua sản phẩm này. Với công nghệ 3D DSP được tích hợp bên trong, bạn sẽ được thưởng thức âm nhạc giống như đang trong phòng kín với tiếng ồn được loại bỏ một cách tối đa nhất. Rustic có thể chơi nhạc chất lượng cao như vậy liên tục trong 6 giờ liền cùng đèn LED hiển thị rõ ràng trạng thái pin còn dự trữ. Điều đặc biệt là Rustic tích hợp microphone-SD / TF và nút trả lời điện thoại cho chế độ đàm thoại rảnh tay khi có kết nối bluetooth với thiết bị điện thoại của bạn. Rustic đích thực là một thiết bị hỗ trợ tuyệt vời cho thoại rảnh tay. Vỏ bọc bên ngoài bằng hợp kim nhôm cao cấp, chống mài mọn và rất nhẹ, bền tạo cho Rustic trở nên mạnh mẽ và nổi bật trong bất cứ nơi nào mà nó xuất hiện. Hãy lựa chọn Rustic ngay hôm nay để trải nghiệm cảm giác tuyệt vời mà chiếc loa di động chất lượng này đem lại và hỗ trợ trọn vẹn nhất cho mọi cuộc vui của bạn.</div></div><div><br><span style="text-decoration: underline;" data-mce-style="text-decoration: underline;"><strong>Thông số kỹ thuật:</strong></span><br><br></div><table border="0" cellpadding="1" cellspacing="1" height="auto" width="100%" class="mce-item-table"><tbody><tr><td>Thương Hiệu</td><td>EGANY</td></tr><tr><td>Danh Mục</td><td>Loa di động</td></tr><tr><td>Chất liệu</td><td>Nhựa trong&nbsp;</td></tr><tr><td>Kích thước</td><td>100 X 100 X 100</td></tr><tr><td>Thời gian giao hàng&nbsp;</td><td>1 - 2 ngày làm việc</td></tr><tr><td>Chính Sách Bảo Hành</td><td>Bảo hành chính hãng</td></tr><tr><td>Showroom</td><td>61/2 Quang Trung, P.10 ,&nbsp;Q. Gò Vấp, TP. HCM</td></tr><tr><td>Hotline</td><td>0909 000 000</td></tr><tr><td>Bluetooth® Version</td><td>v4.0</td></tr><tr><td>Input power</td><td>5V, 1A</td></tr><tr><td>Output power</td><td>2W x 2</td></tr><tr><td>Impedance</td><td>3 Ohms</td></tr><tr><td>Speaker frequency</td><td>200Hz - 18KHz</td></tr><tr><td>Signal-to-noise ratio</td><td>65dB</td></tr><tr><td>Charging time</td><td>3.5-4 hours</td></tr><tr><td>Playing time</td><td>3 hours</td></tr><tr><td>Battery Capacity</td><td>Li-ion 900 mAh, 3.7V</td></tr><tr><td>Operating distance</td><td>10 meters</td></tr><tr><td>Packing Contents</td><td>Orbit, Micro-USB charging cable, 3.5 mm Audio Cable, User Guide, Warranty Card</td></tr><tr><td>Compatibility</td><td>Bluetooth™ enabled devices</td></tr></tbody></table><div><br></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading " id="headingTwo">
+                                            <h4 class="panel-title">
+                                                <a style='width: 100%; display:block;' class="collapsed" data-toggle="collapse" href="#collapseTwo">
+                                                    <i class="icon-info-sign"></i><span class=""> Bình luận</span>
+                                                </a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseTwo" class="panel-collapse collapse in " role="tabpanel">
+                                            <div class="panel-body">
+                                                <div id="fb-root"></div>
+                                                <div class="fb-comments" data-href="http://ephukien.myharavan.com/products/tai-nghe-bluetooth-mondo" data-numposts="5" width="100%" data-colorscheme="light"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="line"></div>
+                                <div class="col_one_third nobottommargin">
+                                    <a href="http://haravan.com/" title="" class="hidden-xs" target='_blank'><img class="image_fade" src="/Assets/client/hstatic.net/589/1000057589/1000148995/sp_policies_img2208.jpg?v=258" alt=""></a>
+                                </div>
+                                <div class="col_two_third col_last nobottommargin">
+                                    <div class="col_half">
+                                        <div class="feature-box fbox-plain fbox-dark fbox-small">
+                                            <div class="fbox-icon">
+                                                <i class="icon-plane"></i>
+                                            </div>
+                                            <h3>Giao hàng toàn quốc</h3>
+                                            <p class="notopmargin">Lorem ipsum dolor sit amet, nec error dignissim at. Porro graeco nonumes no eam, id est justo scaevola, porro bonorum euripidis nec ne.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col_half col_last">
+                                        <div class="feature-box fbox-plain fbox-dark fbox-small">
+                                            <div class="fbox-icon">
+                                                <i class="icon-calendar3"></i>
+                                            </div>
+                                            <h3>Bảo hành 1 năm</h3>
+                                            <p class="notopmargin">Novum appellantur et est, vel eius legere nominati cu. Postea aliquid ad vis, nam tota facer ea, sed ex agam fierent euripidis. Iisque inimicus qualisque ei ius.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col_half nobottommargin">
+                                        <div class="feature-box fbox-plain fbox-dark fbox-small">
+                                            <div class="fbox-icon">
+                                                <i class="icon-random"></i>
+                                            </div>
+                                            <h3>Đổi trả trong 30 ngày</h3>
+                                            <p class="notopmargin">Pri ut nonumy graeco sapientem, sit no meliore noluisse, splendide contentiones consectetuer ne mei.</p>
+                                        </div>
+                                    </div>
+                                    <div class="col_half col_last nobottommargin">
+                                        <div class="feature-box fbox-plain fbox-dark fbox-small">
+                                            <div class="fbox-icon">
+                                                <i class="icon-folder-open"></i>
+                                            </div>
+                                            <h3>Hoàn tiền nếu hàng lỗi</h3>
+                                            <p class="notopmargin">Mucius vocibus maluisset ea eum, et eros idque timeam ius, vim nihil iuvaret mentitum cu.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="clear"></div><div class="line"></div>
+            <!-- related products -->
+
+            <div class="col_full nobottommargin" id='product-related-products'>
+                <h4>Sản phẩm cùng nhóm</h4>
+                <div id="oc-product" class="owl-carousel product-carousel">
+                    @foreach (var product in (IEnumerable<MyShop.Models.ProductViewModel>)ViewBag.Related)
+                    {
+                        var url = "/san-pham/" + product.ProductCategory.Alias + "/" + product.Alias + "-" + product.ID + ".html";
+                        <div class="oc-item">
+                            <div class="product iproduct clearfix">
+                                <div class="product-image">
+                                    <a href="@url"><img src="@product.Image" alt="@product.Name"></a>
+                                    <a href="@url"><img src="@product.Image2" alt="@product.Name"></a>
+
+                                    <div class="product-overlay">
+                                        <a href="@url" class='add-to-cart'><i class='icon-shopping-cart'> Chi tiết</i></a>
+                                        <a href="#" class="hidden-sm hidden-xs item-quick-view fancybox-fast-view"><i class="icon-zoom-in2"></i> Đặt hàng</a>
+                                    </div>
+                                </div>
+                                <div class="product-desc center">
+                                    <div class="product-title"><h3><a href="@url">@product.Name</a></h3></div>
+                                    <div class="product-price">
+                                        <ins>@product.Price.ToString("N0")₫</ins>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+
+                <script type="text/javascript">
+
+                    jQuery(document).ready(function ($) {
+                        var ocProduct = $("#oc-product");
+                        ocProduct.owlCarousel({
+                            margin: 30,
+                            nav: true,
+                            navText: ['<i class="icon-angle-left"></i>', '<i class="icon-angle-right"></i>'],
+                            autoplayHoverPause: true,
+                            dots: false,
+                            responsive: {
+                                0: { items: 1 },
+                                600: { items: 2 },
+                                1000: { items: 4 }
+                            }
+                        });
+
+                    });
+
+                </script>
+            </div>
+
+            <!-- end related products -->
+        </div>
+        <!-- Sidebar
+        ============================================= -->
+        <div class="sidebar nobottommargin left-sidebar hidden-xs hidden-sm">
+            <div class="sidebar-widgets-wrap">
+                <!-- categories -->
+
+                <div class="widget widget_links clearfix">
+                    <h4>Danh mục</h4>
+                    @{Html.RenderAction("Category", "Product");}
+                </div>
+
+                <!-- end categories -->
+                <!-- recent product -->
+
+                <div class="widget clearfix">
+
+                    <h4><a href='../../phu-kien-xe-dap.html'>Sản phẩm khuyến mãi</a></h4>
+                    @{Html.RenderAction("TopOnSale", "Product");}
+                </div>
+
+                <!-- end recent product -->
+                <!-- recent view -->
+
+                <div class="widget clearfix">
+                    <h4>Sản phẩm vừa xem</h4>
+                    @{Html.RenderAction("RecentProduct", "Product");}
+                </div>
+
+                <!-- end recent view -->
+                <!-- most popular -->
+
+                <div class="widget clearfix">
+                    <h4><a href='../../hot-products.html'>Sản phẩm được xem nhiều</a></h4>
+                    @{Html.RenderAction("PopularProduct", "Product");}
+                </div>
+
+                <!-- end most recent -->
+
+                <div class="widget clearfix" style='overflow:hidden'>
+                    <h4>Facebook</h4>
+                    <div style="width: 100%;">
+                        <!-- Page plugin's width will be 180px -->
+                      
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- .sidebar end -->
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        if ($('#product_quantity').val() == '0') {
+            $('#addtocart').attr('disabled', 'disabled');
+        }
+        else {
+            $('#addtocart').removeAttr('disabled');
+        }
+    });
+</script>
