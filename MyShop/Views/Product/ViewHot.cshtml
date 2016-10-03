@@ -1,7 +1,7 @@
 ﻿@model MyShop.Infrastructure.Core.PaginationSet<MyShop.Models.ProductViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ViewHot";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -211,11 +211,10 @@
 @section title{
     <section id="page-title">
         <div class="container clearfix">
-            <h1 class="col-md-6 col-sm-6">@ViewBag.Category.Name</h1><br class="hidden-xs">
+            <h1 class="col-md-6 col-sm-6">Sản phẩm nỗi bật</h1><br class="hidden-xs">
             <ol class="breadcrumb col-md-6 col-sm-6 hidden-xs">
                 <li><a href="/">Trang chủ</a></li>
-                <li><a href="/collections/all">Danh mục</a></li>
-                <li class="active">@ViewBag.Category.Name</li>
+                <li class="active">Sản phẩm nỗi bật</li>
             </ol>
         </div>
     </section>
@@ -631,7 +630,6 @@
     </div>
 
 </div>
-
 
 <script id="tpl-product-color" type="x-tmpl-mustache">
     <option value="{{ProductNameColor}}">{{ProductNameColor}}</option>

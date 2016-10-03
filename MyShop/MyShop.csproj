@@ -666,6 +666,10 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Info.cshtml" />
     <Content Include="Views\Account\Reset.cshtml" />
+    <Content Include="Views\Product\ViewAll.cshtml" />
+    <Content Include="Views\Product\ViewSale.cshtml" />
+    <Content Include="Views\Product\ViewHot.cshtml" />
+    <Content Include="Views\Product\ViewPopular.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

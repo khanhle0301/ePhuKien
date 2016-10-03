@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MyShop.Models.ProductCategoryViewModel>
 
 <ul class='nav nav-pills nav-stacked'>
-    <li class='menu'><a class='menu' href="collections/all.html"><img src='/Assets/client/hstatic.net/589/1000057589/1000148995/menu_icon_12208.png?v=258' />Tất cả sản phẩm</a></li>
+    <li class='menu'><a class='menu' href="/san-pham/news/"><img src='/Assets/client/hstatic.net/589/1000057589/1000148995/menu_icon_12208.png?v=258' />Tất cả sản phẩm</a></li>
    @foreach (var category in Model.Where(x => x.ParentID == null))
    {
        var childCategories = Model.Where(x => x.ParentID == category.ID);
@@ -26,8 +26,8 @@
         </li>
        }
    }    
-    <li class='menu'><a class='menu' href="collections/hang-moi-ve.html"><img src='/Assets/client/hstatic.net/589/1000057589/1000148995/menu_icon_62208.png?v=258' />Hàng mới về</a></li>
-    <li class='menu'><a class='menu' href="collections/duoc-xem-nhieu.html"><img src='/Assets/client/hstatic.net/589/1000057589/1000148995/menu_icon_72208.png?v=258' />Được xem nhiều</a></li>
-    <li class='menu'><a class='menu' href="collections/khuyen-mai.html"><img src='/Assets/client/hstatic.net/589/1000057589/1000148995/menu_icon_82208.png?v=258' />Đang khuyến mãi</a></li>
-    <li class='menu'><a class='menu' href="collections/hot-products.html"><img src='/Assets/client/hstatic.net/589/1000057589/1000148995/menu_icon_92208.png?v=258' />Nổi bật</a></li>
+    <li class='menu'><a class='menu' href="/san-pham/news/"><img src='/Assets/client/hstatic.net/589/1000057589/1000148995/menu_icon_62208.png?v=258' />Hàng mới về</a></li>
+    <li class='menu'><a class='menu' href="/san-pham/duoc-xem-nhieu/"><img src='/Assets/client/hstatic.net/589/1000057589/1000148995/menu_icon_72208.png?v=258' />Được xem nhiều</a></li>
+    <li class='menu'><a class='menu' href="/san-pham/khuyen-mai/"><img src='/Assets/client/hstatic.net/589/1000057589/1000148995/menu_icon_82208.png?v=258' />Đang khuyến mãi</a></li>
+    <li class='menu'><a class='menu' href="/san-pham/noi-bat/"><img src='/Assets/client/hstatic.net/589/1000057589/1000148995/menu_icon_92208.png?v=258' />Nổi bật</a></li>
 </ul>

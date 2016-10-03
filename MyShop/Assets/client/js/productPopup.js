@@ -17,7 +17,7 @@
     },
     loadSize: function (id) {
         $.ajax({
-            url: '/Product/GetSize',
+            url: '/Product/GetColor',
             data: {
                 id: id
             },

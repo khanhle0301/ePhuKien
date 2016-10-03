@@ -15,6 +15,36 @@ namespace MyShop
              defaults: new { controller = "Account", action = "Index", id = UrlParameter.Optional },
              namespaces: new string[] { "MyShop.Controllers" }
          );
+
+            routes.MapRoute(
+            name: "ViewAll",
+            url: "san-pham/news/",
+            defaults: new { controller = "Product", action = "ViewAll", id = UrlParameter.Optional },
+            namespaces: new string[] { "MyShop.Controllers" }
+        );
+
+            routes.MapRoute(
+          name: "ViewSale",
+          url: "san-pham/khuyen-mai/",
+          defaults: new { controller = "Product", action = "ViewSale", id = UrlParameter.Optional },
+          namespaces: new string[] { "MyShop.Controllers" }
+      );
+
+
+            routes.MapRoute(
+          name: "ViewPopular",
+          url: "san-pham/duoc-xem-nhieu/",
+          defaults: new { controller = "Product", action = "ViewPopular", id = UrlParameter.Optional },
+          namespaces: new string[] { "MyShop.Controllers" }
+      );
+
+            routes.MapRoute(
+        name: "ViewHot",
+        url: "san-pham/noi-bat/",
+        defaults: new { controller = "Product", action = "ViewHot", id = UrlParameter.Optional },
+        namespaces: new string[] { "MyShop.Controllers" }
+    );
+
             routes.MapRoute(
             name: "Account",
             url: "tai-khoan.html",

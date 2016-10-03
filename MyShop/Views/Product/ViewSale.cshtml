@@ -1,7 +1,7 @@
 ﻿@model MyShop.Infrastructure.Core.PaginationSet<MyShop.Models.ProductViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ViewSale";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -211,11 +211,10 @@
 @section title{
     <section id="page-title">
         <div class="container clearfix">
-            <h1 class="col-md-6 col-sm-6">@ViewBag.Category.Name</h1><br class="hidden-xs">
+            <h1 class="col-md-6 col-sm-6">Đang khuyến mãi</h1><br class="hidden-xs">
             <ol class="breadcrumb col-md-6 col-sm-6 hidden-xs">
                 <li><a href="/">Trang chủ</a></li>
-                <li><a href="/collections/all">Danh mục</a></li>
-                <li class="active">@ViewBag.Category.Name</li>
+                <li class="active">Đang khuyến mãi</li>
             </ol>
         </div>
     </section>
@@ -333,10 +332,7 @@
                                     <div class="product-image">
                                         <a href="@url"><img src="@product.Image" alt="@product.Name"></a>
                                         <a href="@url"><img src="@product.Image2" alt="@product.Name"></a>
-                                        @if (@product.PromotionPrice.HasValue)
-                                        {
-                                            <div class="sale-flash">Sale</div>
-                                        }
+                                        <div class="sale-flash">Sale</div>
                                         <div class="product-overlay">
                                             <a href="@url" class='add-to-cart'><i class='icon-zoom-in2'> Chi tiết</i></a>
                                             <a href="#" class="btn-popup" data-id="@product.ID"><i class="icon-shopping-cart"></i> Đặt hàng</a>
@@ -631,7 +627,6 @@
     </div>
 
 </div>
-
 
 <script id="tpl-product-color" type="x-tmpl-mustache">
     <option value="{{ProductNameColor}}">{{ProductNameColor}}</option>
