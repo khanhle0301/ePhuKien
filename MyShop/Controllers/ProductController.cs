@@ -17,125 +17,150 @@ namespace MyShop.Controllers
     {
         private ProductDao _productDao = new ProductDao();
         private ProductCategoryDao _productCategoryDao = new ProductCategoryDao();
-        private TagDao _tagDao = new TagDao();       
-        private ColorDao _colorDao = new ColorDao();      
-        public ActionResult Index(string alias, int page = 1, string sort = "updated_desc", string price = "", string color = "")
+        private TagDao _tagDao = new TagDao();
+        private ColorDao _colorDao = new ColorDao();
+        public ActionResult Index(string alias)
         {
             var category = _productCategoryDao.GetByAlias(alias);
             ViewBag.Category = Mapper.Map<ProductCategory, ProductCategoryViewModel>(category);
-            ViewBag.Sort = sort;
-            ViewBag.Price = price;
-            ViewBag.Color = color;
             ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetAll());
-            int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
-            int totalRow = 0;
-            var productModel = _productDao.GetListProductByCategoryIdPaging(category.ID, page, pageSize, sort, price, color, out totalRow);
-            var productViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(productModel);
-            int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
-            var paginationSet = new PaginationSet<ProductViewModel>()
-            {
-                Items = productViewModel,
-                MaxPage = 5,
-                Page = page,
-                TotalCount = totalRow,
-                TotalPages = totalPage
-            };
-
-            return View(paginationSet);
+            return View();
         }
 
-        public ActionResult ViewAll(int page = 1, string sort = "updated_desc", string price = "", string color = "")
+        [HttpGet]
+        public JsonResult LoadDataCategory(int id, int page, int pageSize, string sort = "", string price = "", string color = "")
         {
-            ViewBag.Sort = sort;
-            ViewBag.Price = price;
-            ViewBag.Color = color;
-            ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetAll());
-            int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
-            int totalRow = 0;
-            var productModel = _productDao.GetAllProductPaging(page, pageSize, sort, price, color, out totalRow);
-            var productViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(productModel);
-            int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
-            var paginationSet = new PaginationSet<ProductViewModel>()
+            var model = _productDao.GetListProductByCategoryIdPaging(id, sort, price, color);
+            int totalRow = model.Count();
+            model = model.Skip((page - 1) * pageSize).Take(pageSize);
+            return Json(new
             {
-                Items = productViewModel,
-                MaxPage = 5,
-                Page = page,
-                TotalCount = totalRow,
-                TotalPages = totalPage
-            };
-
-            return View(paginationSet);
+                data = model,
+                total = totalRow,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ViewPopular(int page = 1, string sort = "manual", string price = "", string color = "")
-        {           
-            ViewBag.Sort = sort;
-            ViewBag.Price = price;
-            ViewBag.Color = color;
-            ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetAll());
-            int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
-            int totalRow = 0;
-            var productModel = _productDao.GetPopularProductPaging(page, pageSize, sort, price, color, out totalRow);
-            var productViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(productModel);
-            int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
-            var paginationSet = new PaginationSet<ProductViewModel>()
-            {
-                Items = productViewModel,
-                MaxPage = 5,
-                Page = page,
-                TotalCount = totalRow,
-                TotalPages = totalPage
-            };
-
-            return View(paginationSet);
-        }
-
-        public ActionResult ViewSale(int page = 1, string sort = "updated_desc", string price = "", string color = "")
+        public ActionResult ViewAll()
         {
-            ViewBag.Sort = sort;
-            ViewBag.Price = price;
-            ViewBag.Color = color;
             ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetAll());
-            int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
-            int totalRow = 0;
-            var productModel = _productDao.GetSaleProductPaging(page, pageSize, sort, price, color, out totalRow);
-            var productViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(productModel);
-            int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
-            var paginationSet = new PaginationSet<ProductViewModel>()
-            {
-                Items = productViewModel,
-                MaxPage = 5,
-                Page = page,
-                TotalCount = totalRow,
-                TotalPages = totalPage
-            };
-
-            return View(paginationSet);
+            return View();
         }
 
-        public ActionResult ViewHot(int page = 1, string sort = "updated_desc", string price = "", string color = "")
+        [HttpGet]
+        public JsonResult LoadDataAll(int page, int pageSize, string sort = "", string price = "", string color = "")
         {
-            ViewBag.Sort = sort;
-            ViewBag.Price = price;
-            ViewBag.Color = color;
-            ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetAll());
-            int pageSize = int.Parse(ConfigHelper.GetByKey("PageSize"));
-            int totalRow = 0;
-            var productModel = _productDao.GetHotProductPaging(page, pageSize, sort, price, color, out totalRow);
-            var productViewModel = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(productModel);
-            int totalPage = (int)Math.Ceiling((double)totalRow / pageSize);
-            var paginationSet = new PaginationSet<ProductViewModel>()
+            var model = _productDao.GetAllProductPaging(sort, price, color);
+            int totalRow = model.Count();
+            model = model.Skip((page - 1) * pageSize).Take(pageSize);
+            return Json(new
             {
-                Items = productViewModel,
-                MaxPage = 5,
-                Page = page,
-                TotalCount = totalRow,
-                TotalPages = totalPage
-            };
-
-            return View(paginationSet);
+                data = model,
+                total = totalRow,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult ViewPopular()
+        {
+            ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetAll());
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult LoadDataPopular(int page, int pageSize, string sort = "", string price = "", string color = "")
+        {
+            var model = _productDao.GetPopularProductPaging(sort, price, color);
+            int totalRow = model.Count();
+            model = model.Skip((page - 1) * pageSize).Take(pageSize);
+            return Json(new
+            {
+                data = model,
+                total = totalRow,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ViewSale()
+        {
+            ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetAll());
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult LoadDataOnsale(int page, int pageSize, string sort = "", string price = "", string color = "")
+        {
+            var model = _productDao.GetSaleProductPaging(sort, price, color);
+            int totalRow = model.Count();
+            model = model.Skip((page - 1) * pageSize).Take(pageSize);
+            return Json(new
+            {
+                data = model,
+                total = totalRow,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ViewHot()
+        {
+            ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetAll());
+            return View();
+        }
+
+        public ActionResult ViewNew()
+        {
+            ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetAll());
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult LoadDataHot(int page, int pageSize, string sort = "", string price = "", string color = "")
+        {
+            var model = _productDao.GetHotProductPaging(sort, price, color);
+            int totalRow = model.Count();
+            model = model.Skip((page - 1) * pageSize).Take(pageSize);
+            return Json(new
+            {
+                data = model,
+                total = totalRow,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult LoadDataNew(int page, int pageSize, string sort = "", string price = "", string color = "")
+        {
+            var model = _productDao.GetNewProductPaging(sort, price, color);
+            int totalRow = model.Count();
+            model = model.Skip((page - 1) * pageSize).Take(pageSize);
+            return Json(new
+            {
+                data = model,
+                total = totalRow,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ListByTag(string tagId)
+        {
+            ViewBag.Tag = tagId;
+            ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetAll());
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult LoadDataByTag(string tagid, int page, int pageSize, string sort = "", string price = "", string color = "")
+        {
+            var model = _productDao.GetAllByTagPaging(tagid, sort, price, color);
+            int totalRow = model.Count();
+            model = model.Skip((page - 1) * pageSize).Take(pageSize);
+            return Json(new
+            {
+                data = model,
+                total = totalRow,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult Detail(int id)
         {
@@ -147,7 +172,7 @@ namespace MyShop.Controllers
             ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetListColorByProductId(id));
             ViewBag.Related = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(_productDao.GetReatedProducts(id, 12));
 
-            _productDao.IncreaseView(id);           
+            _productDao.IncreaseView(id);
 
             var recentProduct = (List<RecentProductItem>)Session[CommonConstants.RecentProductSession];
             if (recentProduct == null)

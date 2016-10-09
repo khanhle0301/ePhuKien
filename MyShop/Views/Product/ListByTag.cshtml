@@ -1,11 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "ViewAll";
+    ViewBag.Title = "ListByTag";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 @section footerJS{
-    <script src="~/Assets/client/js/controller/productAllController.js"></script>
+    <script src="~/Assets/client/js/controller/productByTagController.js"></script>
     <script src="~/Assets/client/js/addtocart.js"></script>
 }
 
@@ -38,16 +39,17 @@
 @section title{
     <section id="page-title">
         <div class="container clearfix">
-            <h1 class="col-md-6 col-sm-6">Tất cả sản phẩm</h1><br class="hidden-xs">
+            <h1 class="col-md-6 col-sm-6">Tag: @ViewBag.Tag</h1><br class="hidden-xs">
             <ol class="breadcrumb col-md-6 col-sm-6 hidden-xs">
                 <li><a href="/">Trang chủ</a></li>
-                <li class="active">Tất cả sản phẩm</li>
+                <li><a href="/san-pham/all">Sản phẩm</a></li>
+                <li class="active">Tag: @ViewBag.Tag</li>
             </ol>
         </div>
     </section>
 }
-
-<div class="content-wrap">    
+<div class="content-wrap">
+    <input type="hidden" id="tagid" value="@ViewBag.Tag" />
     <div class="container clearfix">
         <!-- Post Content
         ============================================= -->
@@ -273,8 +275,7 @@
                     {{/sale}}
                     {{^sale}}
                     <ins>{{ProductPrice}}₫ </ins>
-                    {{/sale}}
-                    
+                    {{/sale}}                    
                 </div>
             </div>
         </div>
@@ -345,3 +346,5 @@
     </div>
 
 </div>
+
+

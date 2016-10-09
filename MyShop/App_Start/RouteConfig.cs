@@ -18,8 +18,16 @@ namespace MyShop
 
             routes.MapRoute(
             name: "ViewAll",
-            url: "san-pham/news/",
+            url: "san-pham/all/",
             defaults: new { controller = "Product", action = "ViewAll", id = UrlParameter.Optional },
+            namespaces: new string[] { "MyShop.Controllers" }
+        );
+
+
+            routes.MapRoute(
+            name: "ViewNew",
+            url: "san-pham/news/",
+            defaults: new { controller = "Product", action = "ViewNew", id = UrlParameter.Optional },
             namespaces: new string[] { "MyShop.Controllers" }
         );
 
@@ -105,6 +113,13 @@ namespace MyShop
                defaults: new { controller = "Product", action = "Index", alias = UrlParameter.Optional },
                 namespaces: new string[] { "MyShop.Controllers" }
            );
+
+            routes.MapRoute(
+            name: "Product Tag",
+            url: "san-pham/tag/{tagId}/",
+            defaults: new { controller = "Product", action = "ListByTag", tagId = UrlParameter.Optional },
+              namespaces: new string[] { "MyShop.Controllers" }
+        );
 
             routes.MapRoute(
               name: "Product Detail",

@@ -5,7 +5,7 @@
     int soluong = 0;
     foreach (var item in Model)
     {
-        var tongtien = (@item.Product.Price * @item.Quantity);
+        var tongtien = (item.Product.PromotionPrice.HasValue) ? (item.Product.PromotionPrice.Value * @item.Quantity) : (item.Product.Price * @item.Quantity);
         thanhtien += tongtien;
         soluong += item.Quantity;
     }
@@ -30,7 +30,7 @@
                         <a href="/san-pham/@(cart.Product.ProductCategory.Alias)/@(cart.Product.Alias)-@(cart.Product.ID).html"><img src="@cart.Product.Image" alt="@cart.Product.Name"></a>
                     </div>
                     <div class="top-cart-item-desc">
-                        <a href="/san-pham/@(cart.Product.ProductCategory.Alias)/@(cart.Product.Alias)-@(cart.Product.ID).html">@cart.Product.Name</a><span class="top-cart-item-price">@cart.Product.Price.ToString("N0")đ</span>
+                        <a href="/san-pham/@(cart.Product.ProductCategory.Alias)/@(cart.Product.Alias)-@(cart.Product.ID).html">@cart.Product.Name</a><span class="top-cart-item-price">@(cart.Product.PromotionPrice.HasValue ? cart.Product.PromotionPrice.Value.ToString("N0") : cart.Product.Price.ToString("N0"))</span>
                         <span class="top-cart-item-quantity">x @cart.Quantity</span>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 ﻿using Model.EF;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -213,9 +214,9 @@ namespace Model.Dao
             return query.Skip((page - 1) * pageSize).Take(pageSize);
         }
 
-        public IEnumerable<Product> GetPopularProductPaging(int page, int pageSize, string sort, string price, string color, out int totalRow)
+        public IEnumerable<Product> GetPopularProductPaging(string sort, string price, string color)
         {
-            var query = db.Products.Include("ProductCategory").Where(x => x.Status && x.ViewCount.HasValue);
+            var query = db.Products.Include("ProductCategory").Where(x => x.Status && x.ViewCount.HasValue).Take(20);
 
             IEnumerable<Product> resultColor = Enumerable.Empty<Product>();
 
@@ -289,12 +290,10 @@ namespace Model.Dao
                     result = result.OrderByDescending(x => x.UpdatedDate);
                     break;
             }
-            totalRow = result.Count();
-            return result.Skip((page - 1) * pageSize).Take(pageSize);
+            return result;
         }
 
-
-        public IEnumerable<Product> GetAllProductPaging(int page, int pageSize, string sort, string price, string color, out int totalRow)
+        public IEnumerable<Product> GetAllProductPaging(string sort, string price, string color)
         {
             var query = db.Products.Include("ProductCategory").Where(x => x.Status);
 
@@ -370,11 +369,10 @@ namespace Model.Dao
                     result = result.OrderByDescending(x => x.UpdatedDate);
                     break;
             }
-            totalRow = result.Count();
-            return result.Skip((page - 1) * pageSize).Take(pageSize);
+            return result;
         }
 
-        public IEnumerable<Product> GetSaleProductPaging(int page, int pageSize, string sort, string price, string color, out int totalRow)
+        public IEnumerable<Product> GetSaleProductPaging(string sort, string price, string color)
         {
             var query = db.Products.Include("ProductCategory").Where(x => x.PromotionPrice.HasValue && x.Status);
 
@@ -450,11 +448,10 @@ namespace Model.Dao
                     result = result.OrderByDescending(x => x.UpdatedDate);
                     break;
             }
-            totalRow = result.Count();
-            return result.Skip((page - 1) * pageSize).Take(pageSize);
+            return result;
         }
 
-        public IEnumerable<Product> GetHotProductPaging(int page, int pageSize, string sort, string price, string color, out int totalRow)
+        public IEnumerable<Product> GetHotProductPaging(string sort, string price, string color)
         {
             var query = db.Products.Include("ProductCategory").Where(x => x.HotFlag == true && x.Status);
 
@@ -530,27 +527,18 @@ namespace Model.Dao
                     result = result.OrderByDescending(x => x.UpdatedDate);
                     break;
             }
-            totalRow = result.Count();
-            return result.Skip((page - 1) * pageSize).Take(pageSize);
+            return result;
         }
 
-
-        public IEnumerable<Product> GetListProductByCategoryIdPaging(int categoryId, int page, int pageSize, string sort, string price, string color, out int totalRow)
+        public IEnumerable<Product> GetAllByTagPaging(string tagId, string sort, string price, string color)
         {
-            IEnumerable<Product> query = Enumerable.Empty<Product>();
-            var category = db.ProductCategories.Find(categoryId);
-            if (category.ParentID == null)
-            {
-                var childCategories = db.ProductCategories.Where(x => x.ParentID == category.ID);
-                foreach (var item in childCategories)
-                {
-                    query = query.Concat(db.Products.Include("ProductCategory").Where(x => x.Status && x.CategoryID == item.ID));
-                }
-            }
-            else
-            {
-                query = db.Products.Include("ProductCategory").Where(x => x.Status && x.CategoryID == categoryId);
-            }
+            var query = from a in db.Products
+                        join b in db.ProductTags
+                        on a.ID equals b.ProductID
+                        where b.TagID == tagId && a.Status
+                        orderby a.CreatedDate descending
+                        select a;
+            query = query.Include("ProductCategory");
 
             IEnumerable<Product> resultColor = Enumerable.Empty<Product>();
 
@@ -624,8 +612,178 @@ namespace Model.Dao
                     result = result.OrderByDescending(x => x.UpdatedDate);
                     break;
             }
-            totalRow = result.Count();
-            return result.Skip((page - 1) * pageSize).Take(pageSize);
+            return result;
+        }
+
+        public IEnumerable<Product> GetNewProductPaging(string sort, string price, string color)
+        {
+            var query = db.Products.Include("ProductCategory").Where(x => x.Status).OrderByDescending(x => x.UpdatedDate).Take(20);
+
+            IEnumerable<Product> resultColor = Enumerable.Empty<Product>();
+
+            IEnumerable<Product> resultPrice = Enumerable.Empty<Product>();
+
+            if (!string.IsNullOrEmpty(color))
+            {
+                var colorArr = color.Split(',');
+                foreach (var item in colorArr)
+                {
+                    resultColor = resultColor.Concat(query.Where(x => x.Colors != null && x.Colors.ToLower().Contains(item.ToLower())));
+                }
+            }
+            else
+            {
+                resultColor = resultColor.Concat(query);
+            }
+
+            resultColor = resultColor.Distinct();
+
+            if (!string.IsNullOrEmpty(price))
+            {
+                var priceArr = price.Split(',');
+                for (int i = 0; i < priceArr.Length; i++)
+                {
+                    if (priceArr[i] == "-100")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price < 100000));
+                    else if (priceArr[i] == "100-300")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price >= 100000 && x.Price <= 300000));
+                    else if (priceArr[i] == "300-500")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price >= 300000 && x.Price <= 500000));
+                    else if (priceArr[i] == "500-1000")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price >= 500000 && x.Price <= 1000000));
+                    else if (priceArr[i] == "1000")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price > 1000000));
+                }
+            }
+            else
+            {
+                resultPrice = resultPrice.Concat(resultColor); ;
+            }
+
+            var result = resultPrice.Distinct();
+            switch (sort)
+            {
+                case "manual":
+                    result = result.OrderByDescending(x => x.HotFlag);
+                    break;
+                case "price_asc":
+                    result = result.OrderBy(x => x.Price);
+                    break;
+                case "price_desc":
+                    result = result.OrderByDescending(x => x.Price);
+                    break;
+                case "name_asc":
+                    result = result.OrderBy(x => x.Name);
+                    break;
+                case "name_desc":
+                    result = result.OrderByDescending(x => x.Name);
+                    break;
+                case "updated_asc":
+                    result = result.OrderBy(x => x.UpdatedDate);
+                    break;
+                case "updated_desc":
+                    result = result.OrderByDescending(x => x.UpdatedDate);
+                    break;
+                case "sold_quantity":
+                    result = result.OrderByDescending(x => x.QuantitySold);
+                    break;
+                default:
+                    result = result.OrderByDescending(x => x.UpdatedDate);
+                    break;
+            }
+            return result;
+        }
+
+        public IEnumerable<Product> GetListProductByCategoryIdPaging(int categoryId, string sort, string price, string color)
+        {
+            IEnumerable<Product> query = Enumerable.Empty<Product>();
+            var category = db.ProductCategories.Find(categoryId);
+            if (category.ParentID == null)
+            {
+                var childCategories = db.ProductCategories.Where(x => x.ParentID == category.ID);
+                foreach (var item in childCategories)
+                {
+                    query = query.Concat(db.Products.Include("ProductCategory").Where(x => x.Status && x.CategoryID == item.ID));
+                }
+            }
+            else
+            {
+                query = db.Products.Include("ProductCategory").Where(x => x.Status && x.CategoryID == categoryId);
+            }
+
+            IEnumerable<Product> resultColor = Enumerable.Empty<Product>();
+
+            if (!string.IsNullOrEmpty(color))
+            {
+                var colorArr = color.Split(',');
+                foreach (var item in colorArr)
+                {
+                    resultColor = resultColor.Concat(query.Where(x => x.Colors != null && x.Colors.ToLower().Contains(item.ToLower())));
+                }
+            }
+            else
+            {
+                resultColor = resultColor.Concat(query);
+            }
+
+            resultColor = resultColor.Distinct();
+
+            IEnumerable<Product> resultPrice = Enumerable.Empty<Product>();
+
+            if (!string.IsNullOrEmpty(price))
+            {
+                var priceArr = price.Split(',');
+                for (int i = 0; i < priceArr.Length; i++)
+                {
+                    if (priceArr[i] == "-100")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price < 100000));
+                    else if (priceArr[i] == "100-300")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price >= 100000 && x.Price <= 300000));
+                    else if (priceArr[i] == "300-500")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price >= 300000 && x.Price <= 500000));
+                    else if (priceArr[i] == "500-1000")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price >= 500000 && x.Price <= 1000000));
+                    else if (priceArr[i] == "1000")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price > 1000000));
+                }
+            }
+            else
+            {
+                resultPrice = resultPrice.Concat(resultColor); ;
+            }
+
+            var result = resultPrice.Distinct();
+            switch (sort)
+            {
+                case "manual":
+                    result = result.OrderByDescending(x => x.HotFlag);
+                    break;
+                case "price_asc":
+                    result = result.OrderBy(x => x.Price);
+                    break;
+                case "price_desc":
+                    result = result.OrderByDescending(x => x.Price);
+                    break;
+                case "name_asc":
+                    result = result.OrderBy(x => x.Name);
+                    break;
+                case "name_desc":
+                    result = result.OrderByDescending(x => x.Name);
+                    break;
+                case "updated_asc":
+                    result = result.OrderBy(x => x.UpdatedDate);
+                    break;
+                case "updated_desc":
+                    result = result.OrderByDescending(x => x.UpdatedDate);
+                    break;
+                case "sold_quantity":
+                    result = result.OrderByDescending(x => x.QuantitySold);
+                    break;
+                default:
+                    result = result.OrderByDescending(x => x.UpdatedDate);
+                    break;
+            }
+            return result;
         }
 
 

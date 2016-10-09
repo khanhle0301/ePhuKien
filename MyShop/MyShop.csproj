@@ -558,8 +558,18 @@
     <Content Include="Assets\client\hstatic.net\589\1000057589\images\preloader%402x.gif" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\images\preloader-dark%402x.gif" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\images\preloader-dark.gif" />
-    <Content Include="Assets\client\js\addCart.js" />
+    <Content Include="Assets\client\js\addtocart.js" />
     <Content Include="Assets\client\js\contact.js" />
+    <Content Include="Assets\client\js\controller\productAllController.js" />
+    <Content Include="Assets\client\js\controller\productByTagController.js" />
+    <Content Include="Assets\client\js\controller\productCategoryController.js" />
+    <Content Include="Assets\client\js\controller\productDetail\addtocartDetail.js" />
+    <Content Include="Assets\client\js\controller\productDetail\addtocartPopup.js" />
+    <Content Include="Assets\client\js\controller\productDetail\productPopup.js" />
+    <Content Include="Assets\client\js\controller\productHotController.js" />
+    <Content Include="Assets\client\js\controller\productNewController.js" />
+    <Content Include="Assets\client\js\controller\productOnSaleController.js" />
+    <Content Include="Assets\client\js\controller\productViewCountController.js" />
     <Content Include="Assets\client\js\login.js" />
     <Content Include="Assets\client\js\plugins\jquery.twbsPagination.min.js" />
     <Content Include="Assets\client\js\plugins\mustache.min.js" />
@@ -670,6 +680,8 @@
     <Content Include="Views\Product\ViewSale.cshtml" />
     <Content Include="Views\Product\ViewHot.cshtml" />
     <Content Include="Views\Product\ViewPopular.cshtml" />
+    <Content Include="Views\Product\ViewNew.cshtml" />
+    <Content Include="Views\Product\ListByTag.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,7 +3,7 @@
         cart.loadData();
         cart.registerEvent();
     },
-    registerEvent: function () {      
+    registerEvent: function () {
         $('#btnUpdate').off('click').on('click', function () {
             var cartList = [];
             $.each($('.txtQuantity'), function (i, item) {
@@ -21,7 +21,7 @@
                 },
                 dataType: 'json',
                 success: function (response) {
-                    if (response.status) {                       
+                    if (response.status) {
                         window.location.href = "/gio-hang.html";
                     }
                 }
@@ -34,11 +34,11 @@
             var Color = $(this).data('color');
             cart.deleteItem(productId, Color);
         });
- 
+
         $('#btnContinue').off('click').on('click', function (e) {
             e.preventDefault();
             window.location.href = "/";
-        });             
+        });
     },
 
     deleteItem: function (productId, Color) {
@@ -85,11 +85,11 @@
                             ProductId: item.ProductId,
                             ProductName: item.Product.Name,
                             Image: item.Product.Image,
-                            Price: item.Product.Price,
+                            Price: (item.Product.PromotionPrice == null) ? item.Product.Price : item.Product.PromotionPrice,
                             Color: item.Color,
-                            PriceF: numeral(item.Product.Price).format('0,0'),
+                            PriceF: (item.Product.PromotionPrice == null) ? numeral(item.Product.Price).format('0,0') : numeral(item.Product.PromotionPrice).format('0,0'),
                             Quantity: item.Quantity,
-                            Amount: numeral(item.Quantity * item.Product.Price).format('0,0')
+                            Amount: (item.Product.PromotionPrice == null) ? numeral(item.Quantity * item.Product.Price).format('0,0') : numeral(item.Quantity * item.Product.PromotionPrice).format('0,0')
                         });
                     });
 
@@ -99,7 +99,7 @@
                         $('#cartContent').html('<p>Không có sản phẩm nào trong giỏ hàng</p><a href="collections/all.html"><i class="icon-line2-action-undo"></i> Tiếp tục mua hàng</a>');
                         $('#note').hide();
                     }
-                    $('#lblTotalOrder').text(numeral(cart.getTotalOrder()).format('0,0')+'₫');
+                    $('#lblTotalOrder').text(numeral(cart.getTotalOrder()).format('0,0') + '₫');
                     cart.registerEvent();
                 }
             }

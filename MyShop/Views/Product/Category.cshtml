@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<MyShop.Models.ProductCategoryViewModel>
 
 <ul class='sidebar_menu'>
-    <li><a href="all.html">Tất cả sản phẩm</a></li>
-    <li><a href="hot-products.html">Sản phẩm nổi bật</a></li> 
+    <li><a href="/san-pham/all/">Tất cả sản phẩm</a></li>
+    <li><a href="/san-pham/noi-bat/">Sản phẩm nổi bật</a></li> 
     @foreach (var category in Model.Where(x => x.ParentID == null))
     {
         var childCategories = Model.Where(x => x.ParentID == category.ID);
@@ -28,7 +28,7 @@
             </li>
         }
     }    
-    <li><a href="hang-moi-ve.html">Hàng mới về</a></li>
-    <li><a href="duoc-xem-nhieu.html">Được xem nhiều</a></li>
-    <li><a href="khuyen-mai.html">Đang khuyến mãi</a></li>
+    <li><a href="/san-pham/news/">Hàng mới về</a></li>
+    <li><a href="/san-pham/duoc-xem-nhieu/">Được xem nhiều</a></li>
+    <li><a href="/san-pham/khuyen-mai/">Đang khuyến mãi</a></li>
 </ul>

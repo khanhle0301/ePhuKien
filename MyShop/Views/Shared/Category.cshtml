@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MyShop.Models.ProductCategoryViewModel>
 
 <ul class='nav nav-pills nav-stacked'>
-    <li class='menu'><a class='menu' href="/san-pham/news/"><img src='/Assets/client/hstatic.net/589/1000057589/1000148995/menu_icon_12208.png?v=258' />Tất cả sản phẩm</a></li>
+    <li class='menu'><a class='menu' href="/san-pham/all/"><img src='/Assets/client/hstatic.net/589/1000057589/1000148995/menu_icon_12208.png?v=258' />Tất cả sản phẩm</a></li>
    @foreach (var category in Model.Where(x => x.ParentID == null))
    {
        var childCategories = Model.Where(x => x.ParentID == category.ID);

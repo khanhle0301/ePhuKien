@@ -1,15 +1,12 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using Common;
-using MyShop.Models;
-using MyShop.Infrastructure.Extensions;
 using Model.Dao;
 using Model.EF;
+using MyShop.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace MyShop.Controllers
 {
@@ -35,6 +32,7 @@ namespace MyShop.Controllers
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }
+
         [HttpPost]
         public JsonResult Add(int productId, int quantity, string color)
         {
@@ -44,7 +42,7 @@ namespace MyShop.Controllers
             {
                 cart = new List<ShoppingCartViewModel>();
             }
-            if (quantity > product.Quantity)
+            if (quantity > product.Quantity || product.Quantity == null)
             {
                 return Json(new
                 {

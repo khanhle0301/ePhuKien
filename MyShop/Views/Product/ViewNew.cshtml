@@ -1,13 +1,13 @@
-﻿
-@{
-    ViewBag.Title = "ViewAll";
+﻿@{
+    ViewBag.Title = "ViewNew";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section footerJS{
-    <script src="~/Assets/client/js/controller/productAllController.js"></script>
+    <script src="~/Assets/client/js/controller/productNewController.js"></script>
     <script src="~/Assets/client/js/addtocart.js"></script>
 }
+
 
 @section left_menu{
     <div class="panel-group left_menu col-md-3 hidden-xs hidden-sm" id='left_menu'>
@@ -38,16 +38,15 @@
 @section title{
     <section id="page-title">
         <div class="container clearfix">
-            <h1 class="col-md-6 col-sm-6">Tất cả sản phẩm</h1><br class="hidden-xs">
+            <h1 class="col-md-6 col-sm-6">Sản phẩm mới nhất</h1><br class="hidden-xs">
             <ol class="breadcrumb col-md-6 col-sm-6 hidden-xs">
                 <li><a href="/">Trang chủ</a></li>
-                <li class="active">Tất cả sản phẩm</li>
+                <li class="active">Sản phẩm mới nhất</li>
             </ol>
         </div>
     </section>
 }
-
-<div class="content-wrap">    
+<div class="content-wrap">
     <div class="container clearfix">
         <!-- Post Content
         ============================================= -->
@@ -274,7 +273,7 @@
                     {{^sale}}
                     <ins>{{ProductPrice}}₫ </ins>
                     {{/sale}}
-                    
+
                 </div>
             </div>
         </div>

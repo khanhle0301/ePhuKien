@@ -1,185 +1,13 @@
-﻿@model MyShop.Infrastructure.Core.PaginationSet<MyShop.Models.ProductViewModel>
-
-@{
+﻿@{
     ViewBag.Title = "ViewAll";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section footerJS{
-    <script src="~/Assets/client/js/addCart.js"></script>
-    <script src="~/Assets/client/js/productPopup.js"></script>
+    <script src="~/Assets/client/js/controller/productViewCountController.js"></script>
+    <script src="~/Assets/client/js/addtocart.js"></script>
 }
 
-<script>
-    function priceClick(cb) {
-        if (!(cb.checked)) {
-            var chkId = '@ViewBag.Price';
-            var chkIdAr = chkId.split(",");
-            for (var i = 0; i < chkIdAr.length; i++) {
-                if ((cb.value).localeCompare(chkIdAr[i]) == 0) {
-                    delete chkIdAr[i];
-                }
-            }
-            var unique = chkIdAr.filter(function (elem, index, self) {
-                return index == self.indexOf(elem);
-            })
-            if (unique.length == 0) {
-                if ("@ViewBag.Color" == "") {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)";
-                }
-                else {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)&color=@(ViewBag.Color)";
-                }
-            }
-            else {
-                if ("@ViewBag.Color" == "") {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)&price=" + unique;
-                }
-                else {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)&price=" + unique + "&color=@(ViewBag.Color)";
-                }
-            }
-        }
-        else {
-            var chkId = '';
-            if ("@ViewBag.Price" != "") {
-                chkId = "@ViewBag.Price" + "," + cb.value;
-            }
-            else {
-                chkId = cb.value;
-            }
-            var chkIdAr = chkId.split(",");
-            var unique = chkIdAr.filter(function (elem, index, self) {
-                return index == self.indexOf(elem);
-            })
-            if (unique.length == 0) {
-                if ("@ViewBag.Color" == "") {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)";
-                }
-                else {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)&color=@(ViewBag.Color)";
-                }
-            }
-            else {
-                if ("@ViewBag.Color" == "") {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)&price=" + unique;
-                }
-                else {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)&price=" + unique + "&color=@(ViewBag.Color)";
-                }
-            }
-        }
-    };
-    setTimeout(function () {
-        var cars = "@ViewBag.Price".split(",");
-        for (i = 0; i < cars.length; i++) {
-            $(".prices li input").each(function () {
-                if ($(this).val() == cars[i]) {
-                    $(this).attr("checked", 'checked');
-                }
-            });
-        }
-    });
-</script>
-
-<script>
-    function colorClick(cb) {
-        if (!(cb.checked)) {
-            var chkId = '@ViewBag.Color';
-            var chkIdAr = chkId.split(",");
-            for (var i = 0; i < chkIdAr.length; i++) {
-                if ((cb.value).localeCompare(chkIdAr[i]) == 0) {
-                    delete chkIdAr[i];
-                }
-            }
-            var unique = chkIdAr.filter(function (elem, index, self) {
-                return index == self.indexOf(elem);
-            })
-            if (unique.length == 0) {
-                if ("@ViewBag.Price" == "") {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)";
-                }
-                else {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)&price=@(ViewBag.Price)";
-                }
-            }
-            else {
-                if ("@ViewBag.Price" == "") {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)&color=" + unique;
-                }
-                else {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)&price=@(ViewBag.Price)&color=" + unique;
-                }
-            }
-        }
-        else {
-            var chkId = '';
-            if ("@ViewBag.Color" != "") {
-                chkId = "@ViewBag.Color" + "," + cb.value;
-            }
-            else {
-                chkId = cb.value;
-            }
-            var chkIdAr = chkId.split(",");
-            var unique = chkIdAr.filter(function (elem, index, self) {
-                return index == self.indexOf(elem);
-            })
-            if (unique.length == 0) {
-                if ("@ViewBag.Price" == "") {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)";
-                }
-                else {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)&price=@(ViewBag.Price)";
-                }
-            }
-            else {
-                if ("@ViewBag.Price" == "") {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)&color=" + unique;
-                }
-                else {
-                    window.location = "?page=1&sort=@(ViewBag.Sort)&price=@(ViewBag.Price)&color=" + unique;
-                }
-            }
-        }
-    };
-    setTimeout(function () {
-        var cars = "@ViewBag.Color".split(",");
-        for (i = 0; i < cars.length; i++) {
-            $(".colors li input").each(function () {
-                if ($(this).val() == cars[i]) {
-                    $(this).attr("checked", 'checked');
-                }
-            });
-        }
-    });
-</script>
-
-<script type="text/javascript">
-    function handleSelect(elm) {
-        if ("@ViewBag.Price" == "") {
-            if ("@ViewBag.Color" == "") {
-                window.location = "?page=@(Model.Page)&sort=" + elm.value;
-            }
-            else {
-                window.location = "?page=@(Model.Page)&sort=" + elm.value + "&color=@(ViewBag.Color)";
-            }
-        }
-        else {
-            if ("@ViewBag.Color" == "") {
-                window.location = "?page=@(Model.Page)&sort=" + elm.value + "&price=@(ViewBag.Price)";
-            }
-            else {
-                window.location = "?page=@(Model.Page)&sort=" + elm.value + "&price=@(ViewBag.Price)&color=@(ViewBag.Color)";
-            }
-        }
-    };
-    setTimeout(function () {
-        $("#sortControl").val("@ViewBag.Sort");
-        if ($("#sortControl").val() == null) {
-            $("#sortControl").val("updated_desc");
-        }
-    });
-</script>
 
 
 @section left_menu{
@@ -244,7 +72,7 @@
                                         {
                                             <li>
                                                 <label class='color_wrapper'>
-                                                    <input class="mausac" type="checkbox" value="@color.Name" onclick='colorClick(this);'>
+                                                    <input class="mausac" type="checkbox" value="@color.Name">
                                                     <span style='background-color: @color.Background' class='color_block' data-toggle="tooltip" title="@color.Name"></span>
                                                 </label>
                                             </li>
@@ -259,27 +87,27 @@
                                     <ul id='filter_group_sm_4' class='panel-collapse collapse'>
                                         <li>
                                             <label>
-                                                <input class="price" type="checkbox" onclick='priceClick(this);' value="-100"> dưới 100,000₫
+                                                <input class="price" type="checkbox" value="-100"> dưới 100,000₫
                                             </label>
                                         </li>
                                         <li>
                                             <label>
-                                                <input class="price" type="checkbox" onclick='priceClick(this);' value="100-300"> 100,000₫ - 300,000₫
+                                                <input class="price" type="checkbox" value="100-300"> 100,000₫ - 300,000₫
                                             </label>
                                         </li>
                                         <li>
                                             <label>
-                                                <input class="price" type="checkbox" onclick='priceClick(this);' value="300-500"> 300,000₫ - 500,000₫
+                                                <input class="price" type="checkbox" value="300-500"> 300,000₫ - 500,000₫
                                             </label>
                                         </li>
                                         <li>
                                             <label>
-                                                <input class="price" type="checkbox" onclick='priceClick(this);' value="500-1000"> 500,000₫ - 1,000,000₫
+                                                <input class="price" type="checkbox" value="500-1000"> 500,000₫ - 1,000,000₫
                                             </label>
                                         </li>
                                         <li>
                                             <label>
-                                                <input class="price" type="checkbox" onclick='priceClick(this);' value="1000"> trên 1,000,000₫
+                                                <input class="price" type="checkbox" value="1000"> trên 1,000,000₫
                                             </label>
                                         </li>
                                     </ul>
@@ -292,11 +120,12 @@
             <!-- Shop
             ============================================= -->
             <div id="shop" class="product-3 clearfix">
+                <span class="col-sm-6 text-center notfound-product" style="display:none">Hiện không có sản phẩm nào</span>
                 <div class='row sort-wrapper'>
                     <div class="browse-tags col-xs-12 pull-right norightpadding" style='margin-bottom: 30px;'>
                         <div class="col-md-4 col-sm-6">
                             <p class="subtext nomargin">
-                                Có <span class='require_symbol'>@Model.TotalCount</span> sản phẩm.
+                                Có <span class='require_symbol' id="productCount"></span> sản phẩm.
                             </p>
                         </div>
                         <div class='col-md-5 col-lg-6 col-xs-4 col-sm-3 text-right' style='line-height: 30px;'>
@@ -304,7 +133,7 @@
                         </div>
                         <div class='col-md-3 col-lg-2 col-xs-7 col-sm-3 norightpadding noleftpadding'>
                             <span class="custom-dropdown custom-dropdown--white pull-right">
-                                <select id="sortControl" onchange="javascript:handleSelect(this)" class="sort-by custom-dropdown__select custom-dropdown__select--white form-control input-sm">
+                                <select id="sortControl" class="sort-by custom-dropdown__select custom-dropdown__select--white form-control input-sm">
                                     <option value="manual">Sản phẩm nổi bật</option>
                                     <option value="price_asc">Giá: Tăng dần</option>
                                     <option value="price_desc">Giá: Giảm dần</option>
@@ -319,218 +148,13 @@
                     </div>
                 </div>
                 <!--- aaaa -->
-
                 <div id='grid_pagination'>
-                    @if (Model.Count > 0)
-                    {
-                        <div class='product_wrapper'>
-                            product one
-                            @foreach (var product in Model.Items)
-                            {
-                                var url = "/san-pham/" + product.ProductCategory.Alias + "/" + product.Alias + "-" + product.ID + ".html";
-                                <div class="product clearfix">
-                                    <div class="product-image">
-                                        <a href="@url"><img src="@product.Image" alt="@product.Name"></a>
-                                        <a href="@url"><img src="@product.Image2" alt="@product.Name"></a>
-                                        @if (@product.PromotionPrice.HasValue)
-                                        {
-                                            <div class="sale-flash">Sale</div>
-                                        }
-                                        <div class="product-overlay">
-                                            <a href="@url" class='add-to-cart'><i class='icon-zoom-in2'> Chi tiết</i></a>
-                                            <a href="#" class="btn-popup" data-id="@product.ID"><i class="icon-shopping-cart"></i> Đặt hàng</a>
-                                        </div>
-                                    </div>
-                                    <div class="product-desc center">
-                                        <div class="product-title"><h3><a href="@url">@product.Name</a></h3></div>
-                                        <div class="product-price">
-                                            @if (@product.PromotionPrice.HasValue)
-                                            {
-                                                <ins>@product.PromotionPrice.Value.ToString("N0")₫ </ins>
-                                                <del>@product.Price.ToString("N0")₫</del>
-                                            }
-                                            else
-                                            {
-                                                <ins>@product.Price.ToString("N0")₫ </ins>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                            <div class="pagination_wrapper">
-                                @if (Model.TotalPages > 1)
-                                {
-                                    var startPageIndex = Math.Max(1, Model.Page - Model.MaxPage / 2);
-                                    var endPageIndex = Math.Min(Model.TotalPages, Model.Page + Model.MaxPage / 2);
-                                    <nav>
-                                        <ul class="pagination">
-                                            @if (Model.Page > 1)
-                                            {
-                                                <li>
-                                                    @if (ViewBag.Price == "")
-                                                    {
-                                                        if (ViewBag.Color == "")
-                                                        {
-                                                            <a href="?page=1&sort=@ViewBag.Sort" aria-label="First">«</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a href="?page=1&sort=@ViewBag.Sort&color=@ViewBag.Color" aria-label="First">«</a>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (ViewBag.Color == "")
-                                                        {
-                                                            <a href="?page=1&sort=@ViewBag.Sort&price=@ViewBag.Price" aria-label="First">«</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a href="?page=1&sort=@ViewBag.Sort&price=@ViewBag.Price&color=@ViewBag.Color" aria-label="First">«</a>
-                                                        }
-                                                    }
-                                                </li>
-                                                <li>
-                                                    @if (ViewBag.Price == "")
-                                                    {
-                                                        if (ViewBag.Color == "")
-                                                        {
-                                                            <a href="?page=@(Model.Page-1)&sort=@ViewBag.Sort" aria-label="Previous">‹</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a href="?page=@(Model.Page-1)&sort=@ViewBag.Sort&color=@ViewBag.Color" aria-label="Previous">‹</a>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (ViewBag.Color == "")
-                                                        {
-                                                            <a href="?page=@(Model.Page-1)&sort=@ViewBag.Sort&price=@ViewBag.Price" aria-label="Previous">‹</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a href="?page=@(Model.Page-1)&sort=@ViewBag.Sort&price=@ViewBag.Price&color=@ViewBag.Color" aria-label="Previous">‹</a>
-                                                        }
-                                                    }
-                                                </li>
-                                            }
-
-                                            @for (int i = startPageIndex; i <= endPageIndex; i++)
-                                            {
-                                                if (Model.Page == i)
-                                                {
-                                                    if (ViewBag.Price == "")
-                                                    {
-                                                        if (ViewBag.Color == "")
-                                                        {
-                                                            <li class="active"><a href="?page=@i&sort=@ViewBag.Sort" title="Trang @i">@i</a></li>
-                                                        }
-                                                        else
-                                                        {
-                                                            <li class="active"><a href="?page=@i&sort=@ViewBag.Sort&color=@ViewBag.Color" title="Trang @i">@i</a></li>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (ViewBag.Color == "")
-                                                        {
-                                                            <li class="active"><a href="?page=@i&sort=@ViewBag.Sort&price=@ViewBag.Price" title="Trang @i">@i</a></li>
-                                                        }
-                                                        else
-                                                        {
-                                                            <li class="active"><a href="?page=@i&sort=@ViewBag.Sort&price=@ViewBag.Price&color=@ViewBag.Color" title="Trang @i">@i</a></li>
-                                                        }
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    if (ViewBag.Price == "")
-                                                    {
-                                                        if (ViewBag.Color == "")
-                                                        {
-                                                            <li><a href="?page=@i&sort=@ViewBag.Sort" title="Trang @i">@i</a></li>
-                                                        }
-                                                        else
-                                                        {
-                                                            <li><a href="?page=@i&sort=@ViewBag.Sort&color=@ViewBag.Color" title="Trang @i">@i</a></li>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (ViewBag.Color == "")
-                                                        {
-                                                            <li><a href="?page=@i&sort=@ViewBag.Sort&price=@ViewBag.Price" title="Trang @i">@i</a></li>
-                                                        }
-                                                        else
-                                                        {
-                                                            <li><a href="?page=@i&sort=@ViewBag.Sort&price=@ViewBag.Price&color=@ViewBag.Color" title="Trang @i">@i</a></li>
-                                                        }
-
-                                                    }
-                                                }
-                                            }
-                                            @if (Model.Page < Model.TotalPages)
-                                            {
-                                                <li>
-                                                    @if (ViewBag.Price == "")
-                                                    {
-                                                        if (ViewBag.Color == "")
-                                                        {
-                                                            <a href="?page=@(Model.Page+1)&sort=@ViewBag.Sort" aria-label="Next">›</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a href="?page=@(Model.Page+1)&sort=@ViewBag.Sort&color=@ViewBag.Color" aria-label="Next">›</a>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (ViewBag.Color == "")
-                                                        {
-                                                            <a href="?page=@(Model.Page+1)&sort=@ViewBag.Sort&price=@ViewBag.Price" aria-label="Next">›</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a href="?page=@(Model.Page+1)&sort=@ViewBag.Sort&price=@ViewBag.Price&color=@ViewBag.Color" aria-label="Next">›</a>
-                                                        }
-                                                    }
-                                                </li>
-                                                <li>
-                                                    @if (ViewBag.Price == "")
-                                                    {
-                                                        if (ViewBag.Color == "")
-                                                        {
-                                                            <a href="?page=@Model.TotalPages&sort=@ViewBag.Sort" aria-label="Last">»</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a href="?page=@Model.TotalPages&sort=@ViewBag.Sort&color=@ViewBag.Color" aria-label="Last">»</a>
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (ViewBag.Color == "")
-                                                        {
-                                                            <a href="?page=@Model.TotalPages&sort=@ViewBag.Sort&price=@ViewBag.Price" aria-label="Last">»</a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a href="?page=@Model.TotalPages&sort=@ViewBag.Sort&price=@ViewBag.Price&color=@ViewBag.Color" aria-label="Last">»</a>
-                                                        }
-                                                    }
-                                                </li>
-                                            }
-                                        </ul>
-                                    </nav>
-                                }
-                            </div>
+                    <div class='product_wrapper' id="tblData">
+                    </div>
+                    <div class="pagination_wrapper">
+                        <div id="pagination" class="pagination">
                         </div>
-                    }
-                    else
-                    {
-                        <span class='col-sm-6 text-center'>Hiện không có sản phẩm nào</span>
-                    }
+                    </div>
                     <script>
                         jQuery(document).ready(function () {
                             if (typeof Layout != 'undefinded') {
@@ -563,7 +187,7 @@
                                     {
                                         <li>
                                             <label class='color_wrapper'>
-                                                <input class="mausac" type="checkbox" value="@color.Name" onclick='colorClick(this);'>
+                                                <input class="mausac" type="checkbox" value="@color.Name">
                                                 <span style='background-color: @color.Background' class='color_block' data-toggle="tooltip" title="@color.Name"></span>
                                             </label>
                                         </li>
@@ -576,27 +200,27 @@
                                 <ul id='filter_group_4' class='panel-collapse collapse in'>
                                     <li>
                                         <label>
-                                            <input class="price" type="checkbox" onclick='priceClick(this);' value="-100"> dưới 100,000₫
+                                            <input class="price" type="checkbox" value="-100"> dưới 100,000₫
                                         </label>
                                     </li>
                                     <li>
                                         <label>
-                                            <input class="price" type="checkbox" onclick='priceClick(this);' value="100-300"> 100,000₫ - 300,000₫
+                                            <input class="price" type="checkbox" value="100-300"> 100,000₫ - 300,000₫
                                         </label>
                                     </li>
                                     <li>
                                         <label>
-                                            <input class="price" type="checkbox" onclick='priceClick(this);' value="300-500"> 300,000₫ - 500,000₫
+                                            <input class="price" type="checkbox" value="300-500"> 300,000₫ - 500,000₫
                                         </label>
                                     </li>
                                     <li>
                                         <label>
-                                            <input class="price" type="checkbox" onclick='priceClick(this);' value="500-1000"> 500,000₫ - 1,000,000₫
+                                            <input class="price" type="checkbox" value="500-1000"> 500,000₫ - 1,000,000₫
                                         </label>
                                     </li>
                                     <li>
                                         <label>
-                                            <input class="price" type="checkbox" onclick='priceClick(this);' value="1000"> trên 1,000,000₫
+                                            <input class="price" type="checkbox" value="1000"> trên 1,000,000₫
                                         </label>
                                     </li>
                                 </ul>
@@ -611,7 +235,7 @@
                     @{Html.RenderAction("Category", "Product");}
                 </div>
                 <div class="widget clearfix">
-                    <h4><a href='#'>Được xem nhiều</a></h4>
+                    <h4><a href='javascript:void(0)'>Được xem nhiều</a></h4>
                     @{Html.RenderAction("PopularProduct", "Product");}
                 </div>
 
@@ -628,68 +252,97 @@
         </div>
         <!-- .sidebar end -->
     </div>
-
-</div>
-
-<script id="tpl-product-color" type="x-tmpl-mustache">
-    <option value="{{ProductNameColor}}">{{ProductNameColor}}</option>
-</script>
-
-<div id="productManange" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="productName"></h4>
+    <script id="data-template" type="x-tmpl-mustache">
+        <div class="product clearfix">
+            <div class="product-image">
+                <a href="{{url}}"><img src="{{ProductImage}}" alt="{{ProductName}}"></a>
+                <a href="{{url}}"><img src="{{ProductImage2}}" alt="{{ProductName}}"></a>
+                {{#sale}}
+                <div class="sale-flash">Sale</div>
+                {{/sale}}
+                <div class="product-overlay">
+                    <a href="{{url}}" class='add-to-cart'><i class='icon-zoom-in2'> Chi tiết</i></a>
+                    <a href="#" class="btn-popup" data-id="{{ProductID}}"><i class="icon-shopping-cart"></i> Đặt hàng</a>
+                </div>
             </div>
-            <div class="modal-body" style="height:auto">
-                <div class="product-page-options">
-                    <div class="sizePicker">
-                        <label class="control-label options-title">Màu sắc</label>
-                        <div class="options-selection">
-                            <select id="product-color" class="form-control input-sm size"></select>
+            <div class="product-desc center">
+                <div class="product-title"><h3><a href="{{url}}">{{ProductName}}</a></h3></div>
+                <div class="product-price">
+                    {{#sale}}
+                    <ins>{{PromotionPrice}}₫ </ins>
+                    <del>{{ProductPrice}}₫ </del>
+                    {{/sale}}
+                    {{^sale}}
+                    <ins>{{ProductPrice}}₫ </ins>
+                    {{/sale}}
+
+                </div>
+            </div>
+        </div>
+    </script>
+
+
+    <script id="tpl-product-color" type="x-tmpl-mustache">
+        <option value="{{ProductNameColor}}">{{ProductNameColor}}</option>
+    </script>
+
+    <div id="productManange" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="productName"></h4>
+                </div>
+                <div class="modal-body" style="height:auto">
+                    <div class="product-page-options">
+                        <div class="sizePicker">
+                            <label class="control-label options-title">Màu sắc</label>
+                            <div class="options-selection">
+                                <select id="product-color" class="form-control input-sm size"></select>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <form id="ProductDetailsForm" class="nobottommargin clearfix">
-                    <div class="quantity product-quantity clearfix col-xs-6 noleftpadding">
-                        <input type="button" value="-" class="minus">
-                        <input type="text" class="qty" id="product_quantity" readonly="" step="1" min="1" name="quantity" value="1" title="Qty" size="4">
-                        <input type="button" value="+" class="plus">
-                    </div>
-                    <button type="submit" id="addcart" class="btnAddToCart button nomargin col-xs-6">Thêm vào giỏ</button>
-                    <button type="submit" class="abc buy_btn button col-xs-12" id="buynow">Mua ngay </button>
-                    <input type="hidden" id="hidProductID" value="0" />
-                </form>
+                    <form id="ProductDetailsForm" class="nobottommargin clearfix">
+                        <div class="quantity product-quantity clearfix col-xs-6 noleftpadding">
+                            <input type="button" value="-" class="minus">
+                            <input type="text" class="qty" id="product_quantity" readonly="" step="1" min="1" name="quantity" value="1" title="Qty" size="4">
+                            <input type="button" value="+" class="plus">
+                        </div>
+                        <button type="submit" id="addcart" class="btnAddToCart button nomargin col-xs-6">Thêm vào giỏ</button>
+                        <button type="submit" class="abc buy_btn button col-xs-12" id="buynow">Mua ngay </button>
+                        <input type="hidden" id="hidProductID" value="0" />
+                    </form>
 
-                <script>
-                    var quantity = parseInt($('#ProductDetailsForm .product-quantity input.qty').val());
-                    $('#ProductDetailsForm .minus').click(function () {
-                        if (quantity > 0) {
-                            if (quantity == 1) {
-                                $('#addcart').attr('disabled', 'disabled');
+                    <script>
+                        var quantity = parseInt($('#ProductDetailsForm .product-quantity input.qty').val());
+                        $('#ProductDetailsForm .minus').click(function () {
+                            if (quantity > 0) {
+                                if (quantity == 1) {
+                                    $('#addcart').attr('disabled', 'disabled');
+                                }
+                                quantity -= 1;
                             }
-                            quantity -= 1;
-                        }
-                        else {
-                            quantity = 0;
-                        }
-                        $('#ProductDetailsForm .product-quantity input.qty').val(quantity);
-                    });
-                    $('#ProductDetailsForm  .plus').click(function () {
-                        $('#addcart').removeAttr('disabled');
-                        if (quantity < 100) {
-                            quantity += 1;
-                        }
-                        else {
-                            quantity = 100;
-                        }
-                        $('#ProductDetailsForm .product-quantity input.qty').val(quantity)
-                    });
-                </script>
+                            else {
+                                quantity = 0;
+                            }
+                            $('#ProductDetailsForm .product-quantity input.qty').val(quantity);
+                        });
+                        $('#ProductDetailsForm  .plus').click(function () {
+                            $('#addcart').removeAttr('disabled');
+                            if (quantity < 100) {
+                                quantity += 1;
+                            }
+                            else {
+                                quantity = 100;
+                            }
+                            $('#ProductDetailsForm .product-quantity input.qty').val(quantity)
+                        });
+                    </script>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
