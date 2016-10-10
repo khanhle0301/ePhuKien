@@ -8,6 +8,6 @@
         public const string SessionCart = "SessionCart";
         public const string AccountSession = "AccountSession";
         public const int DefaultFooterId = 1;
-        public const int DefaultContactDetailId = 1;
+        public const int DefaultContactDetailId = 1;     
     }
 }

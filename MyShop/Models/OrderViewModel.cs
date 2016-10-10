@@ -19,9 +19,8 @@ namespace MyShop.Models
 
         public string PaymentMethod { set; get; }
 
-        public DateTime? CreatedDate { set; get; }
-        public string CreatedBy { set; get; }
-        public string PaymentStatus { set; get; }
+        public DateTime? CreatedDate { set; get; }      
+        public bool PaymentStatus { set; get; }
         public bool Status { set; get; }
 
         public virtual IEnumerable<OrderDetailViewModel> OrderDetails { set; get; }

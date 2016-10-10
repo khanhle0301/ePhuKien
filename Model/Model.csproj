@@ -58,6 +58,8 @@
     <Compile Include="Dao\ColorDao.cs" />
     <Compile Include="Dao\ContactDao.cs" />
     <Compile Include="Dao\FooterDao.cs" />
+    <Compile Include="Dao\OrderDao.cs" />
+    <Compile Include="Dao\OrderDetailDao.cs" />
     <Compile Include="Dao\PageDao.cs" />
     <Compile Include="Dao\PostCategoryDao.cs" />
     <Compile Include="Dao\PostDao.cs" />
@@ -106,6 +108,18 @@
     <Compile Include="Migrations\201610030142132_Account-Create.Designer.cs">
       <DependentUpon>201610030142132_Account-Create.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610100334575_note-orderdetail.cs" />
+    <Compile Include="Migrations\201610100334575_note-orderdetail.Designer.cs">
+      <DependentUpon>201610100334575_note-orderdetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610100407449_delete-noteOrderdetail.cs" />
+    <Compile Include="Migrations\201610100407449_delete-noteOrderdetail.Designer.cs">
+      <DependentUpon>201610100407449_delete-noteOrderdetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610100515028_oder-message.cs" />
+    <Compile Include="Migrations\201610100515028_oder-message.Designer.cs">
+      <DependentUpon>201610100515028_oder-message.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PhuKienDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -135,6 +149,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610030142132_Account-Create.resx">
       <DependentUpon>201610030142132_Account-Create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610100334575_note-orderdetail.resx">
+      <DependentUpon>201610100334575_note-orderdetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610100407449_delete-noteOrderdetail.resx">
+      <DependentUpon>201610100407449_delete-noteOrderdetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610100515028_oder-message.resx">
+      <DependentUpon>201610100515028_oder-message.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

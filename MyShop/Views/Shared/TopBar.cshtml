@@ -1,5 +1,6 @@
 ﻿@{
     var session = (MyShop.Common.AccountLogin)Session[Common.CommonConstants.AccountSession];
+    var urlrequest = HttpContext.Current.Request.Url.AbsolutePath;
 }
 <div id="top-bar" class="">
     <div class="container clearfix">
@@ -21,11 +22,11 @@
                     <li><a href="/tai-khoan.html">Tài khoản</a></li>
                     @if (session == null)
                     {
-                        <li><a href="/dang-nhap.html">Đăng nhập / Đăng ký</a></li>
+                        <li><a href="/dang-nhap.html?urlredirect=@urlrequest">Đăng nhập / Đăng ký</a></li>
                     }
                     else
                     {
-                        <li class=""><a href="/Account/Logout">Thoát</a></li>                       
+                        <li class=""><a href="/Account/Logout">Thoát</a></li>
                     }
                 </ul>
             </div><!-- .top-links end -->

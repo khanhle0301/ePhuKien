@@ -162,8 +162,7 @@ namespace MyShop.Infrastructure.Extensions
             order.CustomerMobile = orderVm.CustomerMobile;
             order.CustomerMessage = orderVm.CustomerMessage;
             order.PaymentMethod = orderVm.PaymentMethod;
-            order.PaymentStatus = orderVm.PaymentStatus;
-            order.CreatedBy = orderVm.CreatedBy;
+            order.PaymentStatus = orderVm.PaymentStatus;           
             order.CreatedDate = orderVm.CreatedDate;
             order.Status = orderVm.Status;
         }
@@ -173,6 +172,8 @@ namespace MyShop.Infrastructure.Extensions
             orderDetail.OrderID = orderDetailVm.OrderID;
             orderDetail.ProductID = orderDetailVm.ProductID;
             orderDetail.Quantitty = orderDetailVm.Quantitty;
+            orderDetail.Note = orderDetailVm.Note;
+            orderDetail.Price = orderDetailVm.Price;
         }     
 
         public static void UpdateColor(this Color color, ColorViewModel colorVm)

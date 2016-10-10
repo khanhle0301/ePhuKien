@@ -133,7 +133,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\AccountLogin.cs" />
+    <Compile Include="Models\CartInsertViewModel.cs" />
+    <Compile Include="Models\DistrictModel.cs" />
     <Compile Include="Common\Encryptor.cs" />
+    <Compile Include="Models\PrecinctModel.cs" />
+    <Compile Include="Models\ProvinceModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -169,6 +173,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\client\data\Provinces_Data.xml" />
     <Content Include="Assets\client\hstatic.net\0\0\global\api.jquery.js" />
     <Content Include="Assets\client\hstatic.net\0\0\global\customer_area.js" />
     <Content Include="Assets\client\hstatic.net\0\0\global\design\chunghn\webtretho\iconwtt\wtt.png" />
@@ -224,6 +229,7 @@
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\blank.gif" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\bootstrap2208.css" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\cart_bg2208.png" />
+    <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\check_out.css" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\close.png" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\coloredbg.png" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\custom_style2208.css" />
@@ -242,8 +248,10 @@
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\iconalt.svg" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\jquery.fancybox.pack2208.js" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\jquery.fancybox2208.css" />
+    <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\jquery.min.js" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\jquery.themepunch.revolution.min2208.js" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\jquery.themepunch.tools.min2208.js" />
+    <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\jquery.validate.js" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\jquery2208.js" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\layout2208.js" />
     <Content Include="Assets\client\hstatic.net\589\1000057589\1000148995\logo2208.png" />
@@ -560,6 +568,7 @@
     <Content Include="Assets\client\hstatic.net\589\1000057589\images\preloader-dark.gif" />
     <Content Include="Assets\client\js\addtocart.js" />
     <Content Include="Assets\client\js\contact.js" />
+    <Content Include="Assets\client\js\controller\paymentController.js" />
     <Content Include="Assets\client\js\controller\productAllController.js" />
     <Content Include="Assets\client\js\controller\productByTagController.js" />
     <Content Include="Assets\client\js\controller\productCategoryController.js" />
@@ -577,6 +586,7 @@
     <Content Include="Assets\client\js\productPopup.js" />
     <Content Include="Assets\client\js\shoppingCart.js" />
     <Content Include="Assets\client\template\feedback.html" />
+    <Content Include="Assets\client\template\neworder.html" />
     <Content Include="Assets\client\template\recover.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -682,6 +692,8 @@
     <Content Include="Views\Product\ViewPopular.cshtml" />
     <Content Include="Views\Product\ViewNew.cshtml" />
     <Content Include="Views\Product\ListByTag.cshtml" />
+    <Content Include="Views\ShoppingCart\Checkout.cshtml" />
+    <Content Include="Views\Shared\_LayoutPm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

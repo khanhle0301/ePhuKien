@@ -16,6 +16,11 @@ namespace Model.EF
 
         public int Quantitty { set; get; }
 
+        public decimal Price { set; get; }
+
+        [MaxLength(500)]
+        public string Note { set; get; }
+
         [ForeignKey("OrderID")]
         public virtual Order Order { set; get; }
 

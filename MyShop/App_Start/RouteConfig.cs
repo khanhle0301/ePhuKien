@@ -17,6 +17,20 @@ namespace MyShop
          );
 
             routes.MapRoute(
+           name: "Checkout",
+           url: "thanh-toan.html",
+           defaults: new { controller = "ShoppingCart", action = "Checkout", id = UrlParameter.Optional },
+           namespaces: new string[] { "MyShop.Controllers" }
+       );
+
+            routes.MapRoute(
+         name: "PaymentSuccess",
+         url: "gui-don-hang-thanh-cong.html",
+         defaults: new { controller = "ShoppingCart", action = "PaymentSuccess", id = UrlParameter.Optional },
+         namespaces: new string[] { "MyShop.Controllers" }
+     );
+
+            routes.MapRoute(
             name: "ViewAll",
             url: "san-pham/all/",
             defaults: new { controller = "Product", action = "ViewAll", id = UrlParameter.Optional },
@@ -72,7 +86,7 @@ namespace MyShop
              url: "gio-hang.html",
              defaults: new { controller = "ShoppingCart", action = "Index", id = UrlParameter.Optional },
              namespaces: new string[] { "MyShop.Controllers" }
-         );
+         );            
 
             routes.MapRoute(
            name: "Page",

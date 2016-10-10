@@ -1,9 +1,6 @@
-﻿using System;
-
-namespace MyShop.Models
+﻿namespace MyShop.Models
 {
-    [Serializable]
-    public class ShoppingCartViewModel
+    public class CartInsertViewModel
     {
         public int ProductId { set; get; }
         public ProductViewModel Product { set; get; }

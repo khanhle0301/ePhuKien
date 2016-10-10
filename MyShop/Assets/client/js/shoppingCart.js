@@ -4,6 +4,10 @@
         cart.registerEvent();
     },
     registerEvent: function () {
+        $('.cart_checkout_btn').off('click').on('click', function (e) {
+            e.preventDefault();
+            window.location.href = "/thanh-toan.html";
+        });
         $('#btnUpdate').off('click').on('click', function () {
             var cartList = [];
             $.each($('.txtQuantity'), function (i, item) {
@@ -96,7 +100,7 @@
                     $('#cartBody').html(html + cartTotal);
 
                     if (html == '') {
-                        $('#cartContent').html('<p>Không có sản phẩm nào trong giỏ hàng</p><a href="collections/all.html"><i class="icon-line2-action-undo"></i> Tiếp tục mua hàng</a>');
+                        $('#cartContent').html('<p>Không có sản phẩm nào trong giỏ hàng</p><a href="/san-pham/all/"><i class="icon-line2-action-undo"></i> Tiếp tục mua hàng</a>');
                         $('#note').hide();
                     }
                     $('#lblTotalOrder').text(numeral(cart.getTotalOrder()).format('0,0') + '₫');

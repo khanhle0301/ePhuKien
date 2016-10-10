@@ -12,8 +12,11 @@ namespace MyShop.Controllers
     {
         private UserDao _userDao = new UserDao();
 
-        public ActionResult Index()
+        public ActionResult Index(string urlredirect)
         {
+            if (Session[CommonConstants.AccountSession] != null)
+                return Redirect("/");
+            ViewBag.UrlRedirect = urlredirect;
             return View();
         }
 
