@@ -8,13 +8,8 @@ namespace MyShop.Infrastructure.Extensions
         public static void UpdatePostCategory(this PostCategory postCategory, PostCategoryViewModel postCategoryVm)
         {
             postCategory.ID = postCategoryVm.ID;
-            postCategory.Name = postCategoryVm.Name;
-            postCategory.Description = postCategoryVm.Description;
-            postCategory.Alias = postCategoryVm.Alias;
-            postCategory.ParentID = postCategoryVm.ParentID;
-            postCategory.DisplayOrder = postCategoryVm.DisplayOrder;
-            postCategory.Image = postCategoryVm.Image;
-            postCategory.HomeFlag = postCategoryVm.HomeFlag;
+            postCategory.Name = postCategoryVm.Name;         
+            postCategory.Alias = postCategoryVm.Alias;           
             postCategory.CreatedDate = postCategoryVm.CreatedDate;
             postCategory.CreatedBy = postCategoryVm.CreatedBy;
             postCategory.UpdatedDate = postCategoryVm.UpdatedDate;
@@ -28,12 +23,10 @@ namespace MyShop.Infrastructure.Extensions
         {
             productCategory.ID = productCategoryVm.ID;
             productCategory.Name = productCategoryVm.Name;
-            productCategory.Description = productCategoryVm.Description;
             productCategory.Alias = productCategoryVm.Alias;
             productCategory.ParentID = productCategoryVm.ParentID;
             productCategory.DisplayOrder = productCategoryVm.DisplayOrder;
             productCategory.Image = productCategoryVm.Image;
-            productCategory.HomeFlag = productCategoryVm.HomeFlag;
             productCategory.CreatedDate = productCategoryVm.CreatedDate;
             productCategory.CreatedBy = productCategoryVm.CreatedBy;
             productCategory.UpdatedDate = productCategoryVm.UpdatedDate;
@@ -51,9 +44,7 @@ namespace MyShop.Infrastructure.Extensions
             post.Alias = postVm.Alias;
             post.CategoryID = postVm.CategoryID;
             post.Content = postVm.Content;
-            post.Image = postVm.Image;
-            post.HomeFlag = postVm.HomeFlag;
-            post.HotFlag = postVm.HotFlag;
+            post.Image = postVm.Image;           
             post.ViewCount = postVm.ViewCount;
             post.CreatedDate = postVm.CreatedDate;
             post.CreatedBy = postVm.CreatedBy;
@@ -151,6 +142,23 @@ namespace MyShop.Infrastructure.Extensions
             footer.ID = footerVm.ID;
             footer.Name = footerVm.Name;
             footer.Content = footerVm.Content;            
+        }
+
+
+        public static void UpdateUserGroup(this UserGroup userGr, UserGroupViewModel userGrVm)
+        {
+            userGr.ID = userGrVm.ID;
+            userGr.Name = userGrVm.Name;            
+        }
+
+        public static void UpdateUser(this User user, UserViewModel userVm)
+        {
+            user.ID = userVm.ID;
+            user.Name = userVm.Name;
+            user.GroupID = userVm.GroupID;
+            user.Address = userVm.Address;
+            user.Email = userVm.Email;
+            user.Phone = userVm.Phone;          
         }
 
         public static void UpdateOrder(this Order order, OrderViewModel orderVm)

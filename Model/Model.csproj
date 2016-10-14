@@ -57,6 +57,8 @@
     <Compile Include="Abstract\IAuditable.cs" />
     <Compile Include="Dao\ColorDao.cs" />
     <Compile Include="Dao\ContactDao.cs" />
+    <Compile Include="Dao\CredentialDao.cs" />
+    <Compile Include="Dao\FeedbackDao.cs" />
     <Compile Include="Dao\FooterDao.cs" />
     <Compile Include="Dao\OrderDao.cs" />
     <Compile Include="Dao\OrderDetailDao.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Dao\SlideDao.cs" />
     <Compile Include="Dao\TagDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
+    <Compile Include="Dao\UserGroupDao.cs" />
     <Compile Include="EF\Color.cs" />
     <Compile Include="EF\ContactDetail.cs" />
     <Compile Include="EF\Credential.cs" />
@@ -120,6 +123,30 @@
     <Compile Include="Migrations\201610100515028_oder-message.Designer.cs">
       <DependentUpon>201610100515028_oder-message.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610131557171_edit_postcategory.cs" />
+    <Compile Include="Migrations\201610131557171_edit_postcategory.Designer.cs">
+      <DependentUpon>201610131557171_edit_postcategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610131643048_edit_post.cs" />
+    <Compile Include="Migrations\201610131643048_edit_post.Designer.cs">
+      <DependentUpon>201610131643048_edit_post.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610131741376_edit-productCategory.cs" />
+    <Compile Include="Migrations\201610131741376_edit-productCategory.Designer.cs">
+      <DependentUpon>201610131741376_edit-productCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610140827475_edit_userGroup.cs" />
+    <Compile Include="Migrations\201610140827475_edit_userGroup.Designer.cs">
+      <DependentUpon>201610140827475_edit_userGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610140859376_edit_role.cs" />
+    <Compile Include="Migrations\201610140859376_edit_role.Designer.cs">
+      <DependentUpon>201610140859376_edit_role.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201610140906132_add-role.cs" />
+    <Compile Include="Migrations\201610140906132_add-role.Designer.cs">
+      <DependentUpon>201610140906132_add-role.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PhuKienDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -158,6 +185,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610100515028_oder-message.resx">
       <DependentUpon>201610100515028_oder-message.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610131557171_edit_postcategory.resx">
+      <DependentUpon>201610131557171_edit_postcategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610131643048_edit_post.resx">
+      <DependentUpon>201610131643048_edit_post.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610131741376_edit-productCategory.resx">
+      <DependentUpon>201610131741376_edit-productCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610140827475_edit_userGroup.resx">
+      <DependentUpon>201610140827475_edit_userGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610140859376_edit_role.resx">
+      <DependentUpon>201610140859376_edit_role.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610140906132_add-role.resx">
+      <DependentUpon>201610140906132_add-role.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

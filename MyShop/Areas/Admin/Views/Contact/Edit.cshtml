@@ -1,0 +1,79 @@
+﻿@model MyShop.Models.ContactDetailViewModel
+@{
+    ViewBag.Title = "Trang cập nhật thông tin liên hệ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Cập nhật
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Nhập thông tin.
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm("Edit", "Contact", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+                            @Html.HiddenFor(model => model.ID)
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Name)
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Phone)
+                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Email)
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Website)
+                                @Html.TextBoxFor(model => model.Website, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Website, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Address)
+                                @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Other)
+                                @Html.TextAreaFor(model => model.Other, new { htmlAttributes = new { @class = "form-control" }, style = "width: 970px; height: 80px;" })
+                                @Html.ValidationMessageFor(model => model.Other, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Lat)
+                                @Html.TextBoxFor(model => model.Lat, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Lat, "", new { @class = "text-danger", @type = "number" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Lng)
+                                @Html.TextBoxFor(model => model.Lng, new { @class = "form-control", @type = "number" })
+                                @Html.ValidationMessageFor(model => model.Lng, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Cập nhật" class="btn btn-success" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+

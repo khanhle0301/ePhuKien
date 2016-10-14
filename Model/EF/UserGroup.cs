@@ -8,15 +8,12 @@ namespace Model.EF
     public class UserGroup
     {
         [Key]
-        [MaxLength(20)]
-        [Column(TypeName = "varchar")]
-        public string ID { set; get; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { set; get; }
 
         [Required]
         [MaxLength(50)]
-        public string Name { set; get; }
-
-        public bool? Status { set; get; }
+        public string Name { set; get; }     
 
         public virtual IEnumerable<User> Users { set; get; }
         public virtual IEnumerable<Credential> Credentials { set; get; }

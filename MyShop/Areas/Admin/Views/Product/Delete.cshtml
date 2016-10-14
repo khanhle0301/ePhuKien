@@ -1,0 +1,203 @@
+﻿@model Model.EF.Product
+
+@{
+    ViewBag.Title = "Trang xóa sản phẩm " + Model.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Xóa sản phẩm
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Thông tin sản phẩm
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    @if (ViewData["Error"] != null)
+                    {
+                        <h3 style="color:red">Xóa thất bại!</h3>
+                    }
+                    else
+                    {
+                        <h3>Bạn có chắc chắn muốn xóa bản ghi này?</h3>
+                    }
+                    <div>
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.ID)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.ID)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Name)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CategoryID)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.CategoryID)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Image)
+                            </dt>
+
+                            <dd>
+                                <img src="@Html.DisplayFor(model => model.Image)" width="100" alt="" />
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Price)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Price)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PromotionPrice)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.PromotionPrice)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Quantity)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Quantity)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.QuantitySold)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.QuantitySold)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Description)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Content)
+                            </dt>
+
+                            <dd>
+                                @Html.Raw(Model.Content)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Colors)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Colors)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Tags)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Tags)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.CreatedDate)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CreatedBy)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.CreatedBy)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.UpdatedDate)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.UpdatedDate)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.UpdatedBy)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.UpdatedBy)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.ViewCount)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.ViewCount)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.HomeFlag)
+                            </dt>
+
+                            <dd>
+                                @Html.Raw(Model.HomeFlag.Value == true ? "Kích hoạt" : "Khoá")
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.HotFlag)
+                            </dt>
+
+                            <dd>
+                                @Html.Raw(Model.HotFlag.Value == true ? "Kích hoạt" : "Khoá")
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </dt>
+
+                            <dd>
+                                @Html.Raw(Model.Status ? "Kích hoạt" : "Khoá")
+                            </dd>
+
+                        </dl>
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-actions no-color">
+                                <input type="submit" value="Xóa" class="btn btn-default" /> |
+                                @Html.ActionLink("Back to List", "Index")
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

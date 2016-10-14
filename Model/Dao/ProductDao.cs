@@ -1,4 +1,5 @@
-﻿using Model.EF;
+﻿using Common;
+using Model.EF;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,6 +15,50 @@ namespace Model.Dao
         public ProductDao()
         {
             db = new PhuKienDbContext();
+        }
+
+        public bool ChangeStatus(int id)
+        {
+            var cate = db.Products.Find(id);
+            cate.Status = !cate.Status;
+            db.SaveChanges();
+            return cate.Status;
+        }
+
+        public void UpdateImages(long productId, string images)
+        {
+            var product = db.Products.Find(productId);
+            product.MoreImages = images;
+            db.SaveChanges();
+        }
+
+        public bool Delete(int id)
+        {
+            try
+            {
+                var cate = db.Products.Find(id);
+                db.Products.Remove(cate);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public Product ViewDetail(int id)
+        {
+            return db.Products.Find(id);
+        }
+        public IEnumerable<Product> ListAllPaging()
+        {
+            return db.Products.OrderByDescending(x => x.CreatedDate);
+        }
+
+        public IEnumerable<string> GetListProductByName(string name)
+        {
+            return db.Products.Include("ProductCategory").Where(x => x.Status && x.Name.Contains(name)).Select(y => y.Name);
         }
 
         public IEnumerable<Product> GetReatedProducts(int id, int top)
@@ -36,7 +81,6 @@ namespace Model.Dao
         {
             return db.Posts.SingleOrDefault(x => x.Alias == alias);
         }
-
 
         public Product GetAllById(int id)
         {
@@ -72,148 +116,11 @@ namespace Model.Dao
             return db.Products.Include("ProductCategory").Where(x => x.Status).OrderByDescending(x => x.ViewCount).Take(top);
         }
 
-
-        //public IEnumerable<Product> ListAllByTag(string tag, int page, int pageSize, string sort, out int totalRow)
-        //{
-        //    var query = (from a in db.Products
-        //                 join b in db.ProductTags
-        //                 on a.ID equals b.ProductID
-        //                 where b.TagID == tag
-        //                 select new
-        //                 {
-        //                     ID = a.ID,
-        //                     Name = a.Name,
-        //                     MetaTitle = a.Metatitle,
-        //                     Image = a.Image,
-        //                     MoreImage = a.MoreImage,
-        //                     Price = a.Price,
-        //                     PromotionPrice = a.PromotionPrice,
-        //                     Quantity = a.Quantity,
-        //                     Description = a.Description,
-        //                     Detail = a.Detail,
-        //                     CreatedDate = a.CreatedDate,
-        //                     CreatedBy = a.CreatedBy,
-        //                     UpdatedDate = a.UpdatedDate,
-        //                     UpdatedBy = a.UpdatedBy,
-        //                     ViewCount = a.ViewCount,
-        //                     Status = a.Status
-
-        //                 }).AsEnumerable().Select(x => new Product()
-        //                 {
-        //                     ID = x.ID,
-        //                     Name = x.Name,
-        //                     Metatitle = x.MetaTitle,
-        //                     Image = x.Image,
-        //                     MoreImage = x.MoreImage,
-        //                     Price = x.Price,
-        //                     PromotionPrice = x.PromotionPrice,
-        //                     Quantity = x.Quantity,
-        //                     Description = x.Description,
-        //                     Detail = x.Detail,
-        //                     CreatedDate = x.CreatedDate,
-        //                     CreatedBy = x.CreatedBy,
-        //                     UpdatedDate = x.UpdatedDate,
-        //                     UpdatedBy = x.UpdatedBy,
-        //                     ViewCount = x.ViewCount,
-        //                     Status = x.Status
-        //                 });
-        //    switch (sort)
-        //    {
-        //        case "hot":
-        //            query = query.OrderByDescending(x => x.ViewCount);
-        //            break;
-        //        case "price":
-        //            query = query.OrderBy(x => x.Price);
-        //            break;
-        //        case "price_desc":
-        //            query = query.OrderByDescending(x => x.Price);
-        //            break;
-        //        case "name":
-        //            query = query.OrderBy(x => x.Name);
-        //            break;
-        //        case "name_desc":
-        //            query = query.OrderByDescending(x => x.Name);
-        //            break;
-        //        case "new_desc":
-        //            query = query.OrderByDescending(x => x.CreatedDate);
-        //            break;
-        //        case "new":
-        //            query = query.OrderBy(x => x.CreatedDate);
-        //            break;
-        //        case "popular":
-        //            query = query.OrderByDescending(x => x.QuantitySold);
-        //            break;
-        //        default:
-        //            query = query.OrderByDescending(x => x.CreatedDate);
-        //            break;
-        //    }
-        //    totalRow = query.Count();
-        //    return query.Skip((page - 1) * pageSize).Take(pageSize);
-        //}
-
         public List<string> ListName(string keyword)
         {
             return db.Products.Where(x => x.Name.Contains(keyword)).Select(x => x.Name).ToList();
         }
-
-        public List<Product> ListNewProduct(int top)
-        {
-            return db.Products.Where(x => x.Status && x.HomeFlag == true).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
-        }
-
-        public List<Product> ListPromotionProduct(int top)
-        {
-            return db.Products.Where(x => x.Status && x.PromotionPrice.HasValue && x.HomeFlag == true).OrderByDescending(x => x.CreatedDate).Take(top).ToList();
-        }
-
-        public List<Product> ListHotProduct(int top)
-        {
-            return db.Products.Where(x => x.Status && x.QuantitySold > 0 && x.HomeFlag == true).OrderByDescending(x => x.QuantitySold).Take(top).ToList();
-        }
-
-        public List<Product> ListRelatedProducts(int productId)
-        {
-            var product = db.Products.Find(productId);
-            return db.Products.Where(x => x.ID != productId && x.CategoryID == product.CategoryID).ToList();
-        }
-
-        public IEnumerable<Product> ListAllProduct(int page, int pageSize, string sort, out int totalRow)
-        {
-            var query = db.Products.Where(x => x.Status);
-            switch (sort)
-            {
-                case "hot":
-                    query = query.OrderByDescending(x => x.ViewCount);
-                    break;
-                case "price":
-                    query = query.OrderBy(x => x.Price);
-                    break;
-                case "price_desc":
-                    query = query.OrderByDescending(x => x.Price);
-                    break;
-                case "name":
-                    query = query.OrderBy(x => x.Name);
-                    break;
-                case "name_desc":
-                    query = query.OrderByDescending(x => x.Name);
-                    break;
-                case "new_desc":
-                    query = query.OrderByDescending(x => x.CreatedDate);
-                    break;
-                case "new":
-                    query = query.OrderBy(x => x.CreatedDate);
-                    break;
-                case "popular":
-                    query = query.OrderByDescending(x => x.QuantitySold);
-                    break;
-                default:
-                    query = query.OrderByDescending(x => x.CreatedDate);
-                    break;
-            }
-            totalRow = query.Count();
-            return query.Skip((page - 1) * pageSize).Take(pageSize);
-        }
-
+       
         public IEnumerable<Product> GetPopularProductPaging(string sort, string price, string color)
         {
             var query = db.Products.Include("ProductCategory").Where(x => x.Status && x.ViewCount.HasValue).Take(20);
@@ -296,6 +203,112 @@ namespace Model.Dao
         public IEnumerable<Product> GetAllProductPaging(string sort, string price, string color)
         {
             var query = db.Products.Include("ProductCategory").Where(x => x.Status);
+
+            IEnumerable<Product> resultColor = Enumerable.Empty<Product>();
+
+            IEnumerable<Product> resultPrice = Enumerable.Empty<Product>();
+
+            if (!string.IsNullOrEmpty(color))
+            {
+                var colorArr = color.Split(',');
+                foreach (var item in colorArr)
+                {
+                    resultColor = resultColor.Concat(query.Where(x => x.Colors != null && x.Colors.ToLower().Contains(item.ToLower())));
+                }
+            }
+            else
+            {
+                resultColor = resultColor.Concat(query);
+            }
+
+            resultColor = resultColor.Distinct();
+
+            if (!string.IsNullOrEmpty(price))
+            {
+                var priceArr = price.Split(',');
+                for (int i = 0; i < priceArr.Length; i++)
+                {
+                    if (priceArr[i] == "-100")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price < 100000));
+                    else if (priceArr[i] == "100-300")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price >= 100000 && x.Price <= 300000));
+                    else if (priceArr[i] == "300-500")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price >= 300000 && x.Price <= 500000));
+                    else if (priceArr[i] == "500-1000")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price >= 500000 && x.Price <= 1000000));
+                    else if (priceArr[i] == "1000")
+                        resultPrice = resultPrice.Concat(resultColor.Where(x => x.Price > 1000000));
+                }
+            }
+            else
+            {
+                resultPrice = resultPrice.Concat(resultColor); ;
+            }
+
+            var result = resultPrice.Distinct();
+            switch (sort)
+            {
+                case "manual":
+                    result = result.OrderByDescending(x => x.HotFlag);
+                    break;
+                case "price_asc":
+                    result = result.OrderBy(x => x.Price);
+                    break;
+                case "price_desc":
+                    result = result.OrderByDescending(x => x.Price);
+                    break;
+                case "name_asc":
+                    result = result.OrderBy(x => x.Name);
+                    break;
+                case "name_desc":
+                    result = result.OrderByDescending(x => x.Name);
+                    break;
+                case "updated_asc":
+                    result = result.OrderBy(x => x.UpdatedDate);
+                    break;
+                case "updated_desc":
+                    result = result.OrderByDescending(x => x.UpdatedDate);
+                    break;
+                case "sold_quantity":
+                    result = result.OrderByDescending(x => x.QuantitySold);
+                    break;
+                default:
+                    result = result.OrderByDescending(x => x.UpdatedDate);
+                    break;
+            }
+            return result;
+        }
+
+        public IEnumerable<Product> GetAllBySearch(string keyword, string filter, string sort, string price, string color)
+        {
+            var query = db.Products.Include("ProductCategory").Where(x => x.Status && x.Name.Contains(keyword));
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                switch (filter)
+                {
+                    case "onsale":
+                        query = query.Where(x => x.PromotionPrice.HasValue);
+                        break;
+                    case "hot":
+                        query = query.Where(x => x.HotFlag.HasValue);
+                        break;
+                    case "ban-chay":
+                        query = query.Where(x => x.QuantitySold.HasValue);
+                        break;
+                    case "news":
+                        query = query.OrderByDescending(x => x.UpdatedDate);
+                        break;
+                    default:
+                        query = query.OrderByDescending(x => x.UpdatedDate);
+                        break;                       
+                }
+            }
+            else
+            {
+                query = query.Concat(query);
+            }
+
 
             IEnumerable<Product> resultColor = Enumerable.Empty<Product>();
 
@@ -786,118 +799,6 @@ namespace Model.Dao
             return result;
         }
 
-
-        public IEnumerable<Product> Search(string keyword, int page, int pageSize, string sort, out int totalRow)
-        {
-            var query = db.Products.Where(x => x.Status && x.Name.Contains(keyword));
-            switch (sort)
-            {
-                case "hot":
-                    query = query.OrderByDescending(x => x.ViewCount);
-                    break;
-                case "price":
-                    query = query.OrderBy(x => x.Price);
-                    break;
-                case "price_desc":
-                    query = query.OrderByDescending(x => x.Price);
-                    break;
-                case "name":
-                    query = query.OrderBy(x => x.Name);
-                    break;
-                case "name_desc":
-                    query = query.OrderByDescending(x => x.Name);
-                    break;
-                case "new_desc":
-                    query = query.OrderByDescending(x => x.CreatedDate);
-                    break;
-                case "new":
-                    query = query.OrderBy(x => x.CreatedDate);
-                    break;
-                case "popular":
-                    query = query.OrderByDescending(x => x.QuantitySold);
-                    break;
-                default:
-                    query = query.OrderByDescending(x => x.CreatedDate);
-                    break;
-            }
-            totalRow = query.Count();
-            return query.Skip((page - 1) * pageSize).Take(pageSize);
-        }
-
-        public IEnumerable<Product> ListAllSaleOffProduct(int page, int pageSize, string sort, out int totalRow)
-        {
-            var query = db.Products.Where(x => x.Status && x.PromotionPrice.HasValue && x.PromotionPrice > 0);
-            switch (sort)
-            {
-                case "hot":
-                    query = query.OrderByDescending(x => x.ViewCount);
-                    break;
-                case "price":
-                    query = query.OrderBy(x => x.Price);
-                    break;
-                case "price_desc":
-                    query = query.OrderByDescending(x => x.Price);
-                    break;
-                case "name":
-                    query = query.OrderBy(x => x.Name);
-                    break;
-                case "name_desc":
-                    query = query.OrderByDescending(x => x.Name);
-                    break;
-                case "new_desc":
-                    query = query.OrderByDescending(x => x.CreatedDate);
-                    break;
-                case "new":
-                    query = query.OrderBy(x => x.CreatedDate);
-                    break;
-                case "popular":
-                    query = query.OrderByDescending(x => x.QuantitySold);
-                    break;
-                default:
-                    query = query.OrderByDescending(x => x.CreatedDate);
-                    break;
-            }
-            totalRow = query.Count();
-            return query.Skip((page - 1) * pageSize).Take(pageSize);
-        }
-
-        public IEnumerable<Product> ListAllHotProduct(int page, int pageSize, string sort, out int totalRow)
-        {
-            var query = db.Products.Where(x => x.Status && x.QuantitySold > 0);
-            switch (sort)
-            {
-                case "hot":
-                    query = query.OrderByDescending(x => x.ViewCount);
-                    break;
-                case "price":
-                    query = query.OrderBy(x => x.Price);
-                    break;
-                case "price_desc":
-                    query = query.OrderByDescending(x => x.Price);
-                    break;
-                case "name":
-                    query = query.OrderBy(x => x.Name);
-                    break;
-                case "name_desc":
-                    query = query.OrderByDescending(x => x.Name);
-                    break;
-                case "new_desc":
-                    query = query.OrderByDescending(x => x.CreatedDate);
-                    break;
-                case "new":
-                    query = query.OrderBy(x => x.CreatedDate);
-                    break;
-                case "popular":
-                    query = query.OrderByDescending(x => x.QuantitySold);
-                    break;
-                default:
-                    query = query.OrderByDescending(x => x.CreatedDate);
-                    break;
-            }
-            totalRow = query.Count();
-            return query.Skip((page - 1) * pageSize).Take(pageSize);
-        }
-
         public List<string> MoreImage(int id)
         {
             ProductDao dao = new ProductDao();
@@ -913,21 +814,6 @@ namespace Model.Dao
                 }
             }
             return listImagesReturn;
-        }
-
-        public bool UpdateViewCount(int id)
-        {
-            try
-            {
-                var product = db.Products.Find(id);
-                product.ViewCount = product.ViewCount + 1;
-                db.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
 
         public List<Tag> ListTag(int contentId)
@@ -948,6 +834,33 @@ namespace Model.Dao
             return model.ToList();
         }
 
+        public List<Color> ListColor(int id)
+        {
+            var model = (from a in db.Colors
+                         join b in db.ProductColors
+                         on a.ID equals b.ColorID
+                         where b.ProductID == id
+                         select new
+                         {
+                             ID = b.ColorID,
+                             Name = a.Name
+                         }).AsEnumerable().Select(x => new Color()
+                         {
+                             ID = x.ID,
+                             Name = x.Name
+                         });
+            return model.ToList();
+        }
+
+        public void InsertTag(string id, string name)
+        {
+            var tag = new Tag();
+            tag.ID = id;
+            tag.Name = name;
+            tag.Type = CommonConstants.ProductTag;
+            db.Tags.Add(tag);
+            db.SaveChanges();
+        }
 
         public void InsertProductTag(int productId, string tagId)
         {
@@ -961,6 +874,157 @@ namespace Model.Dao
         public bool CheckTag(string id)
         {
             return db.Tags.Count(x => x.ID == id) > 0;
+        }
+
+        public void InsertColor(string id, string name)
+        {
+            var color = new Color();
+            color.ID = id;
+            color.Name = name;
+            color.Background = null;
+            db.Colors.Add(color);
+            db.SaveChanges();
+        }
+
+        public void InsertProductColor(int productId, string colorId)
+        {
+            ProductColor productColor = new ProductColor();
+            productColor.ProductID = productId;
+            productColor.ColorID = colorId;
+            db.ProductColors.Add(productColor);
+            db.SaveChanges();
+        }
+
+        public bool CheckColor(string id)
+        {
+            return db.Colors.Count(x => x.ID == id) > 0;
+        }
+
+        public int Insert(Product product)
+        {
+            try
+            {
+                db.Products.Add(product);
+                db.SaveChanges();
+                if (!string.IsNullOrEmpty(product.Tags))
+                {
+                    string[] tags = product.Tags.Split(',');
+                    foreach (var tag in tags)
+                    {
+                        var tagId = StringHelper.ToUnsignString(tag);
+                        var existedTag = this.CheckTag(tagId);
+                        //insert to to tag table
+                        if (!existedTag)
+                        {
+                            this.InsertTag(tagId, tag);
+                        }
+                        //insert to product tag
+                        this.InsertProductTag(product.ID, tagId);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(product.Colors))
+                {
+                    string[] sizes = product.Colors.Split(',');
+                    foreach (var size in sizes)
+                    {
+                        var sizeID = StringHelper.ToUnsignString(size);
+                        var existedSize = this.CheckColor(sizeID);
+                        //insert to to size table
+                        if (!existedSize)
+                        {
+                            this.InsertColor(sizeID, size);
+                        }
+                        //insert to product size
+                        this.InsertProductColor(product.ID, sizeID);
+                    }
+                }
+                return product.ID;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        public bool Update(Product product)
+        {
+            try
+            {
+                var model = db.Products.Find(product.ID);
+                model.Name = product.Name;
+                model.Alias = StringHelper.ToUnsignString(product.Name);
+                model.MetaKeyword = product.MetaKeyword;
+                model.CategoryID = product.CategoryID;
+                model.Image = product.Image;
+                model.Price = product.Price;
+                model.PromotionPrice = product.PromotionPrice;
+                model.Quantity = product.Quantity;
+                model.Description = product.Description;
+                model.Content = product.Content;
+                model.Tags = product.Tags;
+                model.Colors = product.Colors;
+                model.UpdatedDate = DateTime.Now;
+                model.UpdatedBy = product.UpdatedBy;
+                model.HomeFlag = product.HomeFlag;
+                model.HotFlag = product.HotFlag;
+                model.Status = product.Status;
+                db.SaveChanges();
+                this.RemoveAllContentTag(product.ID);
+                //Xử lý tag
+                if (!string.IsNullOrEmpty(product.Tags))
+                {
+                    string[] tags = product.Tags.Split(',');
+                    foreach (var tag in tags)
+                    {
+                        var tagId = StringHelper.ToUnsignString(tag);
+                        var existedTag = this.CheckTag(tagId);
+                        //insert to to tag table
+                        if (!existedTag)
+                        {
+                            this.InsertTag(tagId, tag);
+                        }
+                        //insert to product tag
+                        this.InsertProductTag(product.ID, tagId);
+                    }
+                }
+
+                this.RemoveAllProductSize(product.ID);
+                //Xử lý Size
+                if (!string.IsNullOrEmpty(product.Colors))
+                {
+                    string[] sizes = product.Colors.Split(',');
+                    foreach (var size in sizes)
+                    {
+                        var sizeID = StringHelper.ToUnsignString(size);
+                        var existedSize = this.CheckColor(sizeID);
+                        //insert to to Size table
+                        if (!existedSize)
+                        {
+                            this.InsertColor(sizeID, size);
+                        }
+                        //insert to product Size
+                        this.InsertProductColor(product.ID, sizeID);
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public void RemoveAllContentTag(int id)
+        {
+            db.ProductTags.RemoveRange(db.ProductTags.Where(x => x.ProductID == id));
+            db.SaveChanges();
+        }
+
+        public void RemoveAllProductSize(int id)
+        {
+            db.ProductColors.RemoveRange(db.ProductColors.Where(x => x.ProductID == id));
+            db.SaveChanges();
         }
     }
 }

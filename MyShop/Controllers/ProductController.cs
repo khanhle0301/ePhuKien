@@ -166,8 +166,8 @@ namespace MyShop.Controllers
         {
             var productModel = _productDao.GetAllById(id);
             var viewModel = Mapper.Map<Product, ProductViewModel>(productModel);
-            //List<string> listImages = new JavaScriptSerializer().Deserialize<List<string>>(viewModel.MoreImages);
-            //ViewBag.MoreImages = listImages;
+            List<string> listImages = new JavaScriptSerializer().Deserialize<List<string>>(viewModel.MoreImages);
+            ViewBag.MoreImages = listImages;
             ViewBag.Tags = Mapper.Map<IEnumerable<Tag>, IEnumerable<TagViewModel>>(_tagDao.GetListTagByProductId(id));
             ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetListColorByProductId(id));
             ViewBag.Related = Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(_productDao.GetReatedProducts(id, 12));
@@ -221,7 +221,6 @@ namespace MyShop.Controllers
             return PartialView(model);
         }
 
-
         [ChildActionOnly]
         public ActionResult PopularProduct()
         {
@@ -255,5 +254,38 @@ namespace MyShop.Controllers
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Search(string type, string keyword, string filter)
+        {
+            ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetAll());
+            ViewBag.Keyword = keyword;
+            ViewBag.Filter = filter;
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult LoadDataSearch(string keyword, string filter, int page, int pageSize, string sort = "", string price = "", string provider = "", string color = "", string chatlieu = "")
+        {
+            var model = _productDao.GetAllBySearch(keyword, filter, sort, price, color);
+            int totalRow = model.Count();
+            model = model.Skip((page - 1) * pageSize).Take(pageSize);
+
+            return Json(new
+            {
+                data = model,
+                total = totalRow,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetListProductByName(string keyword)
+        {
+            var model = _productDao.GetListProductByName(keyword);
+            return Json(new
+            {
+                data = model
+            }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

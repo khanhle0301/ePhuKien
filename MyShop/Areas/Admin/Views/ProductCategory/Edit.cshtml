@@ -1,0 +1,92 @@
+﻿@model MyShop.Models.ProductCategoryViewModel
+@{
+    ViewBag.Title = "Trang cập nhật danh mục sản phẩm " + @Model.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Sửa danh mục sản phẩm
+}
+@section jsFooter{
+    <script>
+        $('#btnSelectImage').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#txtImage').val(url);
+            };
+            finder.popup();
+        })
+    </script>
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Nhập thông tin danh mục sản phẩm.
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm("Edit", "ProductCategory", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Name)
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.ParentID)
+                                @Html.DropDownList("ParentID", "-----None-----")
+                                @Html.ValidationMessageFor(model => model.ParentID, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DisplayOrder)
+                                @Html.TextBoxFor(model => model.DisplayOrder, new { @class = "form-control", @type = "number", @min = "1" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Image)
+                                @Html.TextBoxFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage", style = "width: 600px" })
+                                <a id="btnSelectImage" href="#">Chọn ảnh</a>
+                                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MetaKeyword)
+                                @Html.EditorFor(model => model.MetaKeyword, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.MetaKeyword, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.MetaDescription)
+                                @Html.EditorFor(model => model.MetaDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.MetaDescription, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Status)
+                                @Html.DropDownListFor(model => model.Status, new List<SelectListItem>()
+                                    {
+                                        new SelectListItem(){Selected=true,Text="Kích hoạt",Value="true"},
+                                        new SelectListItem(){Selected=true,Text="Khóa",Value="false"},
+                                    }, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Cập nhật" class="btn btn-default" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

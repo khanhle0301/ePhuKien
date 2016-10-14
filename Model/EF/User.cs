@@ -19,11 +19,8 @@ namespace Model.EF
         [MaxLength(50)]
         [Column(TypeName = "varchar")]
         public string Password { set; get; }
-
-        [Required]
-        [MaxLength(20)]
-        [Column(TypeName = "varchar")]
-        public string GroupID { set; get; }
+      
+        public int GroupID { set; get; }
 
         [Required]
         [MaxLength(100)]      

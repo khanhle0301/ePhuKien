@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Model.EF.ProductCategory>
+@{
+    ViewBag.Title = "Trang danh mục sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Danh sách danh mục sản phẩm
+}
+
+@section jsFooter{
+    <script src="/Assets/admin/js/controller/cateProductController.js"></script>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Danh sách danh mục sản phẩm
+                <a class="btn btn-success" href="/Admin/ProductCategory/Create">Thêm mới</a>
+            </div>
+
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover" id="myTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Tên danh mục
+                                </th>
+                                <th>
+                                    Ngày tạo
+                                </th>
+                                <th>
+                                    Trạng thái
+                                </th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="row_@item.ID">
+                                    <td>@item.ID</td>
+                                    <td>@item.Name</td>
+                                    <td>@item.CreatedDate</td>
+                                    <td><a href="#" class="btn-active" data-id="@item.ID">@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</a></td>
+                                    <td>
+                                        <a href="/Admin/ProductCategory/Edit/@item.ID">Sửa</a>
+                                        |                                       
+                                        <a href="/Admin/ProductCategory/Delete/@item.ID">Xóa</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+</div>

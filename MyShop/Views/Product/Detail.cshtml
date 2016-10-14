@@ -62,7 +62,7 @@
                                     <div class="fslider" data-animation="fade" data-thumbs="true" data-arrows="false">
                                         <div class="flexslider">
                                             <div class="slider-wrap" data-lightbox="gallery">
-                                                @*@{
+                                                @{
                                                     var moreImages = (List<string>)ViewBag.MoreImages;
                                                     if (moreImages.Count > 0)
                                                     {
@@ -75,7 +75,7 @@
                                                             </div>
                                                         }
                                                     }
-                                                }*@
+                                                }
                                             </div>
                                         </div>
                                         @if (@Model.PromotionPrice.HasValue)

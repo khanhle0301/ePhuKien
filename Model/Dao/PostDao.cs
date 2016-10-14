@@ -1,5 +1,6 @@
 ﻿using Common;
 using Model.EF;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -13,6 +14,136 @@ namespace Model.Dao
         public PostDao()
         {
             db = new PhuKienDbContext();
+        }
+
+        public bool ChangeStatus(int id)
+        {
+            var cate = db.Posts.Find(id);
+            cate.Status = !cate.Status;
+            db.SaveChanges();
+            return cate.Status;
+        }
+
+        public void InsertTag(string id, string name)
+        {
+            var tag = new Tag();
+            tag.ID = id;
+            tag.Name = name;
+            tag.Type = CommonConstants.PostTag;
+            db.Tags.Add(tag);
+            db.SaveChanges();
+        }
+
+        public void InsertPostTag(int postId, string tagId)
+        {
+            PostTag postTag = new PostTag();
+            postTag.PostID = postId;
+            postTag.TagID = tagId;
+            db.PostTags.Add(postTag);
+            db.SaveChanges();
+        }
+
+        public bool CheckTag(string id)
+        {
+            return db.Tags.Count(x => x.ID == id) > 0;
+        }
+
+        public int Insert(Post post)
+        {
+            try
+            {
+                db.Posts.Add(post);
+                db.SaveChanges();
+                if (!string.IsNullOrEmpty(post.Tags))
+                {
+                    string[] tags = post.Tags.Split(',');
+                    foreach (var tag in tags)
+                    {
+                        var tagId = StringHelper.ToUnsignString(tag);
+                        var existedTag = this.CheckTag(tagId);
+                        //insert to to tag table
+                        if (!existedTag)
+                        {
+                            this.InsertTag(tagId, tag);
+                        }
+                        //insert to product tag
+                        this.InsertPostTag(post.ID, tagId);
+                    }
+                }
+                return post.ID;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        public bool Update(Post post)
+        {
+            try
+            {
+                var model = db.Posts.Find(post.ID);
+                model.Name = post.Name;
+                model.Alias = StringHelper.ToUnsignString(post.Name);
+                model.CategoryID = post.CategoryID;
+                model.MetaKeyword = post.MetaKeyword;
+                model.Image = post.Image;
+                model.Description = post.Description;
+                model.MetaDescription = post.MetaDescription;
+                model.Content = post.Content;
+                model.Tags = post.Tags;              
+                model.Status = post.Status;
+                model.UpdatedDate = DateTime.Now;
+                model.UpdatedBy = post.UpdatedBy;
+                db.SaveChanges();
+                //Xử lý tag
+                this.RemoveAllContentTag(post.ID);
+                if (!string.IsNullOrEmpty(post.Tags))
+                {
+                    string[] tags = post.Tags.Split(',');
+                    foreach (var tag in tags)
+                    {
+                        var tagId = StringHelper.ToUnsignString(tag);
+                        var existedTag = this.CheckTag(tagId);
+                        //insert to to tag table
+                        if (!existedTag)
+                        {
+                            this.InsertTag(tagId, tag);
+                        }
+                        //insert to product tag
+                        this.InsertPostTag(post.ID, tagId);
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public void RemoveAllContentTag(int id)
+        {
+            db.PostTags.RemoveRange(db.PostTags.Where(x => x.PostID == id));
+            db.SaveChanges();
+        }
+
+
+        public Post ViewDetail(int id)
+        {
+            return db.Posts.Find(id);
+        }
+      
+        public void Delete(int id)
+        {
+            var cate = db.Posts.Find(id);
+            db.Posts.Remove(cate);
+            db.SaveChanges();
+        }
+
+        public IEnumerable<Post> ListAllPaging()
+        {
+            return db.Posts.OrderByDescending(x => x.CreatedDate);
         }
 
         public void IncreaseView(int id)

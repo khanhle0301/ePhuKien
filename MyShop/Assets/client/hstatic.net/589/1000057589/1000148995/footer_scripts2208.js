@@ -83,22 +83,23 @@ $('.top_search input').keypress(function(e) {
 });
 
 function searchCollection() {
-	var collectionId = $('.top_search .collection').val();
-	var searchVal = $('.top_search input[type="text"]').val();
-	var url = '';
-	if(collectionId == 0) {
-		url = '/search?type=product&q='+ searchVal;
-	}
-	else {
-		if(searchVal != '') {
-			url = '/search?type=product&q=' + searchVal + '&filter=(collectionid:product=' + collectionId + ')';
-		}
-		else {
-			url = '/search?type=product&q=filter=(collectionid:product=' + collectionId + ')';
-		}
-	}
-	window.location=url;
+    var collectionId = $('.top_search .collection').val();
+    var searchVal = $('.top_search input[type="text"]').val();
+    var url = '';
+    if (collectionId == 0) {
+        url = '/tim-kiem.html?type=product&keyword=' + searchVal;
+    }
+    else {
+        if (searchVal != '') {
+            url = '/tim-kiem.html?type=product&keyword=' + searchVal + '&filter=' + collectionId;
+        }
+        else {
+            url = '/tim-kiem.html?type=product&keyword=filter=' + collectionId;
+        }
+    }
+    window.location = url;
 }
+
 
 
 function setSearchStorage(form_id) {

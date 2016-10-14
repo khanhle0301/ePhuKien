@@ -22,6 +22,12 @@ namespace Model.Dao
             return slide.Status;
         }
 
+        public IEnumerable<Slide> ListAll()
+        {
+            return db.Slides;
+        }
+
+
         public IEnumerable<Slide> GetSlides()
         {
             return db.Slides.Where(x => x.Status == true).OrderByDescending(x => x.ID);

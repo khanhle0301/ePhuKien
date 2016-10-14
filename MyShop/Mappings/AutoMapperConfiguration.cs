@@ -9,7 +9,7 @@ namespace MyShop.Mappings
         public static void Configure()
         {
             Mapper.CreateMap<Post, PostViewModel>();
-            Mapper.CreateMap<PostCategory, PostCategoryViewModel>();
+            Mapper.CreateMap<PostCategory, PostCategoryViewModel>();       
             Mapper.CreateMap<Tag, TagViewModel>();
             Mapper.CreateMap<ProductCategory, ProductCategoryViewModel>();
             Mapper.CreateMap<Product, ProductViewModel>();
@@ -21,7 +21,9 @@ namespace MyShop.Mappings
             Mapper.CreateMap<Feedback, FeedbackViewModel>();
             Mapper.CreateMap<Order, OrderViewModel>();
             Mapper.CreateMap<OrderDetail, OrderDetailViewModel>();         
-            Mapper.CreateMap<Color, ColorViewModel>();         
+            Mapper.CreateMap<Color, ColorViewModel>();
+            Mapper.CreateMap<UserGroup, UserGroupViewModel>();
+            Mapper.CreateMap<User, UserViewModel>();
         }
     }
 }
