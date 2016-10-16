@@ -43,11 +43,7 @@ namespace MyShop.Areas.Admin.Controllers
                 var productCategory = new ProductCategory();
                 productCategory.UpdateProductCategory(model);
                 var result = new ProductCategoryDao().Insert(productCategory);
-                if (result == 0)
-                {
-                    ModelState.AddModelError("", "Tên danh mục đã tồn tại");
-                }
-                else if (result > 0)
+                if (result > 0)
                 {
                     SetAlert("Thêm danh thành công", "success");
                     return RedirectToAction("Index", "ProductCategory");
@@ -63,7 +59,7 @@ namespace MyShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var dao = new ProductCategoryDao();          
+            var dao = new ProductCategoryDao();
             var result = Mapper.Map<ProductCategory, ProductCategoryViewModel>(dao.ViewDetail(id));
             SetViewBag(result.ParentID);
             return View(result);
@@ -82,11 +78,7 @@ namespace MyShop.Areas.Admin.Controllers
                 var productCategory = new ProductCategory();
                 productCategory.UpdateProductCategory(model);
                 var result = new ProductCategoryDao().Update(productCategory);
-                if (result == 0)
-                {
-                    ModelState.AddModelError("", "Tên danh mục đã tồn tại");
-                }
-                else if (result >0)
+                if (result > 0)
                 {
                     SetAlert("Cập nhật thành công", "success");
                     return RedirectToAction("Index", "ProductCategory");
