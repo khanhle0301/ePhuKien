@@ -9,13 +9,13 @@
         if (childCategories.Count() > 0)
         {
             <li>
-                <a href="/san-pham/@category.Alias/">@category.Name</a>
+                <a href="/san-pham/@category.Alias-@category.ID/">@category.Name</a>
                 <i class='icon-line-plus'></i>
                 <ul class='sidebar_submenu'>
                     @foreach (var childCategory in childCategories)
                     {
                         <li>
-                            <a href="/san-pham/@childCategory.Alias/">@childCategory.Name</a>
+                            <a href="/san-pham/@childCategory.Alias-@childCategory.ID/">@childCategory.Name</a>
                         </li>
                     }
                 </ul>
@@ -24,7 +24,7 @@
         else
         {
             <li>
-                <a href="/san-pham/@category.Alias/">@category.Name</a>
+                <a href="/san-pham/@category.Alias-@category.ID/">@category.Name</a>
             </li>
         }
     }    

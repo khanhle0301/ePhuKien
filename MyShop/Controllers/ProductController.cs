@@ -19,9 +19,10 @@ namespace MyShop.Controllers
         private ProductCategoryDao _productCategoryDao = new ProductCategoryDao();
         private TagDao _tagDao = new TagDao();
         private ColorDao _colorDao = new ColorDao();
-        public ActionResult Index(string alias)
+
+        public ActionResult Index(int id)
         {
-            var category = _productCategoryDao.GetByAlias(alias);
+            var category = _productCategoryDao.GetByID(id);
             ViewBag.Category = Mapper.Map<ProductCategory, ProductCategoryViewModel>(category);
             ViewBag.Colors = Mapper.Map<IEnumerable<Color>, IEnumerable<ColorViewModel>>(_colorDao.GetAll());
             return View();

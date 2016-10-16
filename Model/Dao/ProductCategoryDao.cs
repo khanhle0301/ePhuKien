@@ -47,17 +47,13 @@ namespace Model.Dao
 
         public int Insert(ProductCategory entity)
         {
-            if (db.ProductCategories.Any(x => x.Name == entity.Name))
-                return 0;
             db.ProductCategories.Add(entity);
             db.SaveChanges();
             return entity.ID;
         }
 
         public int Update(ProductCategory entity)
-        {
-            if (db.ProductCategories.Any(x => x.Name == entity.Name && x.ID != entity.ID))
-                return 0;
+        {           
             var model = db.ProductCategories.Find(entity.ID);
             model.Name = entity.Name;
             model.Alias = StringHelper.ToUnsignString(entity.Name);
@@ -84,6 +80,11 @@ namespace Model.Dao
         public ProductCategory GetByAlias(string alias)
         {
             return db.ProductCategories.SingleOrDefault(x => x.Alias == alias);
+        }
+
+        public ProductCategory GetByID(int id)
+        {
+            return db.ProductCategories.Find(id);
         }
 
         public List<ProductCategory> ListByChild()

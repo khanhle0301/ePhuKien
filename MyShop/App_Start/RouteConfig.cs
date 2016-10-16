@@ -130,7 +130,7 @@ namespace MyShop
 
             routes.MapRoute(
                name: "Product Category",
-               url: "san-pham/{alias}/",
+               url: "san-pham/{alias}-{id}/",
                defaults: new { controller = "Product", action = "Index", alias = UrlParameter.Optional },
                 namespaces: new string[] { "MyShop.Controllers" }
            );

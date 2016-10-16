@@ -8,12 +8,12 @@
        if (childCategories.Count() > 0)
        {
         <li class='menu'>
-            <a class='menu' href="/san-pham/@category.Alias/"><img src='@category.Image' />@category.Name<i class='icon-angle-right arrow'></i></a>
+            <a class='menu' href="/san-pham/@category.Alias-@category.ID/"><img src='@category.Image' />@category.Name<i class='icon-angle-right arrow'></i></a>
             <ul class='submenu'>
                 <div class='submenu_padding'>
                     @foreach (var childCategory in childCategories)
                     {
-                        <li class=''><a class='sub-menu' href="/san-pham/@childCategory.Alias/"><div>@childCategory.Name</div></a></li>
+                        <li class=''><a class='sub-menu' href="/san-pham/@childCategory.Alias-@childCategory.ID/"><div>@childCategory.Name</div></a></li>
                     }
                 </div>
             </ul>
@@ -22,7 +22,7 @@
        else
        {
         <li class='menu'>
-            <a class='menu' href="/san-pham/@category.Alias/"><img src='category.Image' />@category.Name<i class='icon-angle-right arrow'></i></a>
+            <a class='menu' href="/san-pham/@category.Alias-@category.ID/"><img src='category.Image' />@category.Name<i class='icon-angle-right arrow'></i></a>
         </li>
        }
    }    
