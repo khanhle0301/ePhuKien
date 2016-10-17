@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace MyShop.Models
 {
@@ -15,7 +12,7 @@ namespace MyShop.Models
         public string Name { set; get; }
 
         public string Alias { set; get; }
-       
+
         [Display(Name = "Danh mục")]
         public int CategoryID { set; get; }
 
@@ -24,7 +21,6 @@ namespace MyShop.Models
         public int? Quantity { set; get; }
 
         public int? QuantitySold { set; get; }
-
 
         [Required(ErrorMessage = "Yêu cầu chọn hình ảnh 1")]
         [Display(Name = "Hình ảnh 1")]

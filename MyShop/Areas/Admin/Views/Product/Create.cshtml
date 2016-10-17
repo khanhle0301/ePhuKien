@@ -8,7 +8,9 @@
 @section header{
     Thêm mới sản phẩm
 }
+
 @section jsFooter{
+    <script src="~/Assets/admin/js/controller/addProductController.js"></script>
     <script>
         $('#btnSelectImage').on('click', function (e) {
             e.preventDefault();
@@ -30,7 +32,7 @@
 
         var editor = CKEDITOR.replace('txtContent', {
             customConfig: '/Assets/admin/js/plugins/ckeditor/config.js',
-        });       
+        });
     </script>
 }
 <div class="row">
@@ -76,14 +78,14 @@
                                 @Html.LabelFor(model => model.Price)
                                 @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "1" } })
                                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-                            </div>                            
+                            </div>
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.PromotionPrice)
                                 @Html.EditorFor(model => model.PromotionPrice, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "1" } })
                                 @Html.ValidationMessageFor(model => model.PromotionPrice, "", new { @class = "text-danger" })
                             </div>
-                         
+
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Quantity)
                                 @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
@@ -94,7 +96,7 @@
                                 @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" }, style = "width: 970px; height: 80px;" })
                                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                             </div>
-                        
+
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Content)
                                 @Html.TextAreaFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" }, id = "txtContent" })
@@ -115,9 +117,15 @@
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.Colors)
-                                @Html.EditorFor(model => model.Colors, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Colors, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.Colors):&nbsp;
+                                @foreach (var item in (IEnumerable<Model.EF.Color>)ViewBag.Color)
+                                {
+                                    <label class="mycolor">
+                                        <input type="checkbox" value="@(item.ID)">@item.Name &nbsp;
+                                    </label>
+                                }
+                                @Html.EditorFor(model => model.Colors, new { htmlAttributes = new { @class = "form-control hidden", @id = "txtColor", @readonly = "readonly" } })
+                                <label class="color-error" style="color:red">Vui lòng chọn màu sắc</label>
                             </div>
 
                             <div class="form-group">

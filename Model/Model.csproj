@@ -66,6 +66,7 @@
     <Compile Include="Dao\PostCategoryDao.cs" />
     <Compile Include="Dao\PostDao.cs" />
     <Compile Include="Dao\ProductCategoryDao.cs" />
+    <Compile Include="Dao\ProductColorDao.cs" />
     <Compile Include="Dao\ProductDao.cs" />
     <Compile Include="Dao\SlideDao.cs" />
     <Compile Include="Dao\TagDao.cs" />
@@ -147,6 +148,10 @@
     <Compile Include="Migrations\201610140906132_add-role.Designer.cs">
       <DependentUpon>201610140906132_add-role.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610161823327_Edit_ProductColor.cs" />
+    <Compile Include="Migrations\201610161823327_Edit_ProductColor.Designer.cs">
+      <DependentUpon>201610161823327_Edit_ProductColor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PhuKienDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -203,6 +208,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610140906132_add-role.resx">
       <DependentUpon>201610140906132_add-role.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610161823327_Edit_ProductColor.resx">
+      <DependentUpon>201610161823327_Edit_ProductColor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -120,21 +120,25 @@ namespace Model.Dao
         {
             return db.Products.Where(x => x.Name.Contains(keyword)).Select(x => x.Name).ToList();
         }
-       
+
+        public IEnumerable<Product> GetProductColor(int id)
+        {
+            var product = db.ProductColors.Include("Product").Where(x => x.ColorID == id).Select(y => y.Product);
+            return product.Include("ProductCategory");
+        }
+
         public IEnumerable<Product> GetPopularProductPaging(string sort, string price, string color)
         {
             var query = db.Products.Include("ProductCategory").Where(x => x.Status && x.ViewCount.HasValue).Take(20);
 
             IEnumerable<Product> resultColor = Enumerable.Empty<Product>();
 
-            IEnumerable<Product> resultPrice = Enumerable.Empty<Product>();
-
             if (!string.IsNullOrEmpty(color))
             {
                 var colorArr = color.Split(',');
                 foreach (var item in colorArr)
                 {
-                    resultColor = resultColor.Concat(query.Where(x => x.Colors != null && x.Colors.ToLower().Contains(item.ToLower())));
+                    resultColor = resultColor.Concat(this.GetProductColor(int.Parse(item)));
                 }
             }
             else
@@ -143,6 +147,8 @@ namespace Model.Dao
             }
 
             resultColor = resultColor.Distinct();
+
+            IEnumerable<Product> resultPrice = Enumerable.Empty<Product>();
 
             if (!string.IsNullOrEmpty(price))
             {
@@ -213,7 +219,7 @@ namespace Model.Dao
                 var colorArr = color.Split(',');
                 foreach (var item in colorArr)
                 {
-                    resultColor = resultColor.Concat(query.Where(x => x.Colors != null && x.Colors.ToLower().Contains(item.ToLower())));
+                    resultColor = resultColor.Concat(this.GetProductColor(int.Parse(item)));
                 }
             }
             else
@@ -301,7 +307,7 @@ namespace Model.Dao
                         break;
                     default:
                         query = query.OrderByDescending(x => x.UpdatedDate);
-                        break;                       
+                        break;
                 }
             }
             else
@@ -319,7 +325,7 @@ namespace Model.Dao
                 var colorArr = color.Split(',');
                 foreach (var item in colorArr)
                 {
-                    resultColor = resultColor.Concat(query.Where(x => x.Colors != null && x.Colors.ToLower().Contains(item.ToLower())));
+                    resultColor = resultColor.Concat(this.GetProductColor(int.Parse(item)));
                 }
             }
             else
@@ -398,7 +404,7 @@ namespace Model.Dao
                 var colorArr = color.Split(',');
                 foreach (var item in colorArr)
                 {
-                    resultColor = resultColor.Concat(query.Where(x => x.Colors != null && x.Colors.ToLower().Contains(item.ToLower())));
+                    resultColor = resultColor.Concat(this.GetProductColor(int.Parse(item)));
                 }
             }
             else
@@ -477,14 +483,13 @@ namespace Model.Dao
                 var colorArr = color.Split(',');
                 foreach (var item in colorArr)
                 {
-                    resultColor = resultColor.Concat(query.Where(x => x.Colors != null && x.Colors.ToLower().Contains(item.ToLower())));
+                    resultColor = resultColor.Concat(this.GetProductColor(int.Parse(item)));
                 }
             }
             else
             {
                 resultColor = resultColor.Concat(query);
             }
-
             resultColor = resultColor.Distinct();
 
             if (!string.IsNullOrEmpty(price))
@@ -562,7 +567,7 @@ namespace Model.Dao
                 var colorArr = color.Split(',');
                 foreach (var item in colorArr)
                 {
-                    resultColor = resultColor.Concat(query.Where(x => x.Colors != null && x.Colors.ToLower().Contains(item.ToLower())));
+                    resultColor = resultColor.Concat(this.GetProductColor(int.Parse(item)));
                 }
             }
             else
@@ -641,7 +646,7 @@ namespace Model.Dao
                 var colorArr = color.Split(',');
                 foreach (var item in colorArr)
                 {
-                    resultColor = resultColor.Concat(query.Where(x => x.Colors != null && x.Colors.ToLower().Contains(item.ToLower())));
+                    resultColor = resultColor.Concat(this.GetProductColor(int.Parse(item)));
                 }
             }
             else
@@ -725,20 +730,18 @@ namespace Model.Dao
             }
 
             IEnumerable<Product> resultColor = Enumerable.Empty<Product>();
-
             if (!string.IsNullOrEmpty(color))
             {
                 var colorArr = color.Split(',');
                 foreach (var item in colorArr)
                 {
-                    resultColor = resultColor.Concat(query.Where(x => x.Colors != null && x.Colors.ToLower().Contains(item.ToLower())));
+                    resultColor = resultColor.Concat(this.GetProductColor(int.Parse(item)));
                 }
             }
             else
             {
                 resultColor = resultColor.Concat(query);
             }
-
             resultColor = resultColor.Distinct();
 
             IEnumerable<Product> resultPrice = Enumerable.Empty<Product>();
@@ -876,7 +879,7 @@ namespace Model.Dao
             return db.Tags.Count(x => x.ID == id) > 0;
         }
 
-        public void InsertColor(string id, string name)
+        public void InsertColor(int id, string name)
         {
             var color = new Color();
             color.ID = id;
@@ -886,7 +889,7 @@ namespace Model.Dao
             db.SaveChanges();
         }
 
-        public void InsertProductColor(int productId, string colorId)
+        public void InsertProductColor(int productId, int colorId)
         {
             ProductColor productColor = new ProductColor();
             productColor.ProductID = productId;
@@ -895,7 +898,7 @@ namespace Model.Dao
             db.SaveChanges();
         }
 
-        public bool CheckColor(string id)
+        public bool CheckColor(int id)
         {
             return db.Colors.Count(x => x.ID == id) > 0;
         }
@@ -923,22 +926,6 @@ namespace Model.Dao
                     }
                 }
 
-                if (!string.IsNullOrEmpty(product.Colors))
-                {
-                    string[] sizes = product.Colors.Split(',');
-                    foreach (var size in sizes)
-                    {
-                        var sizeID = StringHelper.ToUnsignString(size);
-                        var existedSize = this.CheckColor(sizeID);
-                        //insert to to size table
-                        if (!existedSize)
-                        {
-                            this.InsertColor(sizeID, size);
-                        }
-                        //insert to product size
-                        this.InsertProductColor(product.ID, sizeID);
-                    }
-                }
                 return product.ID;
             }
             catch (Exception)
@@ -963,7 +950,6 @@ namespace Model.Dao
                 model.Description = product.Description;
                 model.Content = product.Content;
                 model.Tags = product.Tags;
-                model.Colors = product.Colors;
                 model.UpdatedDate = DateTime.Now;
                 model.UpdatedBy = product.UpdatedBy;
                 model.HomeFlag = product.HomeFlag;
@@ -986,25 +972,6 @@ namespace Model.Dao
                         }
                         //insert to product tag
                         this.InsertProductTag(product.ID, tagId);
-                    }
-                }
-
-                this.RemoveAllProductSize(product.ID);
-                //Xử lý Size
-                if (!string.IsNullOrEmpty(product.Colors))
-                {
-                    string[] sizes = product.Colors.Split(',');
-                    foreach (var size in sizes)
-                    {
-                        var sizeID = StringHelper.ToUnsignString(size);
-                        var existedSize = this.CheckColor(sizeID);
-                        //insert to to Size table
-                        if (!existedSize)
-                        {
-                            this.InsertColor(sizeID, size);
-                        }
-                        //insert to product Size
-                        this.InsertProductColor(product.ID, sizeID);
                     }
                 }
                 return true;

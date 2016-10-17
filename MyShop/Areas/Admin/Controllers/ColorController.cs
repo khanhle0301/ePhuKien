@@ -26,7 +26,7 @@ namespace MyShop.Areas.Admin.Controllers
 
         [HasCredential(RoleID = "DELETE_COLOR")]
         [HttpDelete]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             _colorDao.Delete(id);
             return RedirectToAction("Index");
@@ -44,8 +44,7 @@ namespace MyShop.Areas.Admin.Controllers
         public ActionResult Create(ColorViewModel model)
         {
             if (ModelState.IsValid)
-            {
-                model.ID= StringHelper.ToUnsignString(model.Name);
+            {               
                 var color = new Color();
                 color.UpdateColor(model);
                 int id = _colorDao.Insert(color);
@@ -66,7 +65,7 @@ namespace MyShop.Areas.Admin.Controllers
 
         [HasCredential(RoleID = "EDIT_COLOR")]
         [HttpGet]
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {       
             var result = Mapper.Map<Color, ColorViewModel>(_colorDao.ViewDetail(id));
             return View(result);

@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using AutoMapper;
+using Common;
 using Model.Dao;
 using Model.EF;
 using MyShop.Common;
@@ -25,6 +26,7 @@ namespace MyShop.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            ViewBag.Color = new ColorDao().GetAll();
             SetViewBag();
             return View();
         }
@@ -34,6 +36,7 @@ namespace MyShop.Areas.Admin.Controllers
         [ValidateInput(false)]
         public ActionResult Create(ProductViewModel model)
         {
+            ViewBag.Color = new ColorDao().GetAll();
             if (ModelState.IsValid)
             {
                 if (model.PromotionPrice >= model.Price)
@@ -54,6 +57,7 @@ namespace MyShop.Areas.Admin.Controllers
                     var product = new Product();
                     product.UpdateProduct(model);
                     var result = new ProductDao().Insert(product);
+                    new ProductColorDao().Create(product.ID, model.Colors);
                     if (result > 0)
                     {
                         SetAlert("Thêm danh thành công", "success");
@@ -72,8 +76,15 @@ namespace MyShop.Areas.Admin.Controllers
         public ActionResult Edit(int id)
         {
             var dao = new ProductDao();
-            var result = dao.ViewDetail(id);
+            var result = Mapper.Map<Product, ProductViewModel>(dao.ViewDetail(id));
             SetViewBag(result.CategoryID);
+            string _color = null;
+            foreach (var color in new ColorDao().GetListColorByProductId(id))
+            {
+                _color += color.ID + ",";
+            }
+            ViewBag.ProductColor = _color;
+            ViewBag.Color = new ColorDao().GetAll();
             return View(result);
         }
 
@@ -82,6 +93,7 @@ namespace MyShop.Areas.Admin.Controllers
         [ValidateInput(false)]
         public ActionResult Edit(ProductViewModel model)
         {
+            ViewBag.Color = new ColorDao().GetAll();
             if (ModelState.IsValid)
             {
                 if (model.PromotionPrice >= model.Price)
@@ -99,6 +111,7 @@ namespace MyShop.Areas.Admin.Controllers
                         var product = new Product();
                         product.UpdateProduct(model);
                         var result = new ProductDao().Update(product);
+                        new ProductColorDao().Update(product.ID, model.Colors);
                         if (result)
                         {
                             SetAlert("Cập nhật thành công", "success");

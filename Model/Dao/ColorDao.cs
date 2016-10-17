@@ -20,7 +20,7 @@ namespace Model.Dao
             return db.ProductColors.Include("Color").Where(x => x.ProductID == id).Select(y => y.Color);
         }
 
-        public bool Delete(string id)
+        public bool Delete(int id)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace Model.Dao
             return 1;
         }
 
-        public Color ViewDetail(string id)
+        public Color ViewDetail(int id)
         {
             return db.Colors.SingleOrDefault(x => x.ID == id);
         }

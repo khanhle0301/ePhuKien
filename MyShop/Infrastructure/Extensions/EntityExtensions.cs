@@ -82,8 +82,7 @@ namespace MyShop.Infrastructure.Extensions
             product.MetaKeyword = productVm.MetaKeyword;
             product.MetaDescription = productVm.MetaDescription;
             product.Status = productVm.Status;
-            product.Tags = productVm.Tags;
-            product.Colors = productVm.Colors;          
+            product.Tags = productVm.Tags;                   
         }
 
         public static void UpdateSlide(this Slide slide, SlideViewModel slideVm)

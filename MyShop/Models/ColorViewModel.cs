@@ -4,7 +4,7 @@ namespace MyShop.Models
 {
     public class ColorViewModel
     {
-        public string ID { set; get; }
+        public int ID { set; get; }
 
         [Required(ErrorMessage = "Vui lòng nhập tên")]
         [Display(Name = "Tên màu")]
